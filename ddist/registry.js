@@ -1,0 +1,2 @@
+var e={baseUrl:"./src/test"},t=[{name:"cool-text",type:"registry:ui",registryDependencies:["button"],dependencies:[],devDependencies:[],tailwind:{config:{}},cssVars:{},files:["cool-text.tsx"]}],s={registry:t,config:e};export{s as default};
+//# sourceMappingURL=registry.js.map
