@@ -2,12 +2,10 @@ import path from "path";
 import { Command } from "commander";
 import { z } from "zod";
 import { preflightBuild } from "@/src/preflights/preflight-build";
-import { logger } from "@/src/utils/logger";
-import { getRegistry } from "@/src/utils/get-registry";
+import { loadRegistryConfig } from "@/src/utils/loader";
 import { generateRegistry } from "../utils/generate-registry";
 import { WriteRegistry } from "../utils/write-registry";
-import { errorHandler, Errors } from "../utils/errors";
-import { error } from "console";
+import { errorHandler } from "../utils/errors";
 
 export const buildOptionSchema = z.object({
   cwd: z.string(),
@@ -49,7 +47,8 @@ export const build = new Command()
       process.exit(1);
     }
     // TODO: error handling
-    const { config, errors: getRegistryErrors } = await getRegistry(options);
+    const { config, errors: getRegistryErrors } =
+      await loadRegistryConfig(options);
 
     if (!config || Object.values(getRegistryErrors).some((e) => e)) {
       errorHandler(getRegistryErrors);

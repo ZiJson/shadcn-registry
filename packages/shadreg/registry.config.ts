@@ -1,7 +1,5 @@
-import { RegistryConfig } from "./src/config-schema";
-
-const registryConfig: RegistryConfig = {
-  baseUrl: "./src/test",
+export default {
+  baseUrl: "./src/components",
   registries: [
     {
       name: "cool-text",
@@ -17,5 +15,3 @@ const registryConfig: RegistryConfig = {
     },
   ],
 };
-
-export default registryConfig;

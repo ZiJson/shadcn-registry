@@ -1,7 +1,7 @@
 {
   "name": "shadreg",
-  "version": "0.0.3",
-  "description": "",
+  "version": "0.0.52",
+  "description": "build registry files for your UI library with shadcn",
   "main": "index.js",
   "exports": "./dist/index.js",
   "bin": "./dist/index.js",
@@ -14,12 +14,18 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "bundle-require": "^5.0.0",
     "commander": "^12.1.0",
     "fs-extra": "^11.2.0",
     "kleur": "^4.1.5",
+    "ora": "^8.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zod": "^3.23.8"
