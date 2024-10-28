@@ -10,6 +10,7 @@ import { errorHandler } from "../utils/errors";
 export const buildOptionSchema = z.object({
   cwd: z.string(),
 });
+
 export type BuildOptions = z.infer<typeof buildOptionSchema>;
 
 export const build = new Command()
