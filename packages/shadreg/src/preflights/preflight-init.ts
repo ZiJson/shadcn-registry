@@ -37,7 +37,7 @@ export async function preFlightInit(
         options.cwd
       )}.\nTo start over, remove the ${highlighter.info(
         "registry.config.ts"
-      )} file and run ${highlighter.info("init")} again.`
+      )} file and run ${highlighter.warn("`init`")} again.`
     );
     logger.break();
     process.exit(1);
