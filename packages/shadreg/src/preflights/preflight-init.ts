@@ -27,7 +27,10 @@ export async function preFlightInit(
     };
   }
 
-  if (fs.existsSync(path.resolve(options.cwd, "registry.config.ts"))) {
+  if (
+    fs.existsSync(path.resolve(options.cwd, "registry.config.ts")) &&
+    !options.force
+  ) {
     projectSpinner?.fail();
     logger.break();
     logger.error(
