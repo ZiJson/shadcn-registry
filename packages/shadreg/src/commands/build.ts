@@ -4,7 +4,7 @@ import { z } from "zod";
 import { preflightBuild } from "@/src/preflights/preflight-build";
 import { loadRegistryConfig } from "@/src/utils/loader";
 import { generateRegistry } from "../utils/generate-registry";
-import { WriteRegistry } from "../utils/write-registry";
+import { writeRegistry } from "../utils/write-registry";
 import { errorHandler } from "../utils/errors";
 
 export const buildOptionSchema = z.object({
@@ -61,5 +61,5 @@ export const build = new Command()
       baseUrl: path.resolve(options.cwd, config.baseUrl),
     });
 
-    await WriteRegistry(newRegistries, opts);
+    await writeRegistry(newRegistries, opts);
   });

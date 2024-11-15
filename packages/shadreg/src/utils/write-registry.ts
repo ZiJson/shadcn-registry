@@ -3,7 +3,7 @@ import { BuildOptions } from "../commands/build";
 import { Registry } from "../schema";
 import fs from "fs-extra";
 
-export const WriteRegistry = async (
+export const writeRegistry = async (
   registries: Registry,
   opts: BuildOptions
 ) => {

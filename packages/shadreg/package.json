@@ -10,7 +10,7 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1"
-  }, 
+  },
   "author": {
     "name": "ZiJson",
     "url": "https://github.com/ZiJson"
@@ -29,6 +29,7 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
+    "@vercel/blob": "^0.26.0",
     "bundle-require": "^5.0.0",
     "commander": "^12.1.0",
     "fs-extra": "^11.2.0",
