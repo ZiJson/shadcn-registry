@@ -8,8 +8,12 @@ export const configSchema = z.object({
 
 export type RegistryConfig = z.infer<typeof configSchema>;
 
+export const shadregConfig = (config: RegistryConfig) => config;
+
 export const configTemplate = `
-export default {
+import { shadregConfig } from "shadreg";
+
+export default shadregConfig({
   baseUrl: "./src/components",
   registries: [
     {
@@ -25,4 +29,5 @@ export default {
       files: ["cool-text.tsx"],
     },
   ],
-};`;
+});
+`;

@@ -1,6 +1,6 @@
 {
   "name": "shadreg",
-  "version": "0.0.54",
+  "version": "0.0.6",
   "description": "build registry files for your UI library with shadcn",
   "main": "index.js",
   "exports": "./dist/index.js",

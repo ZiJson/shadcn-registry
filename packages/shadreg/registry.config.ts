@@ -1,5 +1,7 @@
-export default {
-  baseUrl: "./src/test",
+import { shadregConfig } from "shadreg";
+
+export default shadregConfig({
+  baseUrl: "./src/components",
   registries: [
     {
       name: "cool-text",
@@ -13,10 +15,5 @@ export default {
       cssVars: {},
       files: ["cool-text.tsx"],
     },
-    {
-      name: "iphone-15-pro",
-      type: "registry:ui",
-      files: ["iphone-15-pro.tsx"],
-    },
   ],
-};
+});
