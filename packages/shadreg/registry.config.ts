@@ -1,5 +1,5 @@
 export default {
-  baseUrl: "./src/components",
+  baseUrl: "./src/test",
   registries: [
     {
       name: "cool-text",
@@ -12,6 +12,11 @@ export default {
       },
       cssVars: {},
       files: ["cool-text.tsx"],
+    },
+    {
+      name: "iphone-15-pro",
+      type: "registry:ui",
+      files: ["iphone-15-pro.tsx"],
     },
   ],
 };

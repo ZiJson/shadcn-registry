@@ -1,6 +1,5 @@
 import { RegistryConfig } from "@/src/config-schema";
 import fs from "fs-extra";
-import { type } from "os";
 import path from "path";
 import { logger } from "./logger";
 
@@ -16,7 +15,8 @@ export const generateRegistry = async (config: RegistryConfig) => {
             const componentPath = path.join(baseUrl, file);
             let component = "";
             if (!fs.existsSync(componentPath)) {
-              logger.error(`File ${componentPath} does not exist.`);
+              logger.error(`File ${componentPath} does not exist, skipping.`);
+              return file;
             } else {
               component = await getComponentByPath(path.join(baseUrl, file));
             }
@@ -34,7 +34,7 @@ export const generateRegistry = async (config: RegistryConfig) => {
     })
   );
 
-  return newRegistries;
+  return newRegistries.filter((r) => typeof r !== "string");
 };
 
 const getComponentByPath = async (path: string): Promise<string> => {

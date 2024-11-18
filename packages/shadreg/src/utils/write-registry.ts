@@ -1,9 +1,11 @@
 import path from "path";
+import fs from "fs-extra";
 import { BuildOptions } from "../commands/build";
 import { Registry } from "../schema";
-import fs from "fs-extra";
+import { highlighter } from "./hightlighter";
+import { spinner } from "./spinner";
 
-export const WriteRegistry = async (
+export const writeRegistry = async (
   registries: Registry,
   opts: BuildOptions
 ) => {
@@ -11,8 +13,17 @@ export const WriteRegistry = async (
   fs.ensureDirSync(distPath);
 
   for (const registry of registries) {
-    const registryPath = path.join(distPath, `${registry.name}.json`);
-    console.log(`Writing ${registryPath}`);
-    await fs.writeJSON(registryPath, registry, { spaces: 2 });
+    const Spinner = spinner(`Writing ${highlighter.info(registry.name)}`);
+
+    try {
+      const registryPath = path.join(distPath, `${registry.name}.json`);
+      await fs.writeJSON(registryPath, registry, { spaces: 2 });
+      Spinner.succeed(
+        `Successfully wrote ${highlighter.success(registry.name)}`
+      );
+    } catch (error) {
+      Spinner.fail(`Failed to write ${highlighter.error(registry.name)}`);
+      throw error;
+    }
   }
 };
