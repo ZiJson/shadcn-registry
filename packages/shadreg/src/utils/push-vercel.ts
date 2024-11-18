@@ -6,16 +6,24 @@ import path from "path";
 import { spinner } from "./spinner";
 import { highlighter } from "./hightlighter";
 import dotenv from "dotenv";
+import { RegistryConfig } from "../config-schema";
 dotenv.config();
 
 export const pushVercel = async (
-  options: z.infer<typeof publishOptionsSchema>
+  options: z.infer<typeof publishOptionsSchema>,
+  config: RegistryConfig
 ) => {
-  const registries = fs.readdirSync(path.resolve(options.cwd, "registry"));
+  const registries = fs.readdirSync(
+    path.resolve(options.cwd, config.outputDir)
+  );
 
   const urls: { name: string; url: string }[] = [];
   for (const registry of registries) {
-    const url = await readAndPush(options.cwd, registry);
+    if (registry === "_published.json") continue;
+    const url = await readAndPush(
+      path.join(options.cwd, config.outputDir),
+      registry
+    );
     urls.push({ name: registry.split(".")[0], url });
   }
 
@@ -23,7 +31,7 @@ export const pushVercel = async (
 };
 
 const readAndPush = async (cwd: string, filePath: string) => {
-  const file = fs.readFileSync(path.join(cwd, "registry", filePath));
+  const file = fs.readFileSync(path.join(cwd, filePath));
   const Spinner = spinner(`Pushing ${highlighter.info(filePath)}`).start();
 
   try {

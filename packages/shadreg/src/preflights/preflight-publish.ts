@@ -6,6 +6,7 @@ import { logger } from "@/src/utils/logger";
 import { spinner } from "@/src/utils/spinner";
 import fs from "fs-extra";
 import { z } from "zod";
+import { loadRegistryConfig } from "../utils/loader";
 
 export async function preFlightPublish(
   options: z.infer<typeof publishOptionsSchema>
@@ -41,11 +42,14 @@ export async function preFlightPublish(
     process.exit(1);
   }
 
-  if (!fs.existsSync(path.resolve(options.cwd, "registry"))) {
+  const { config, errors: getRegistryErrors } =
+    await loadRegistryConfig(options);
+  const outputDir = config?.outputDir || "shadreg";
+  if (!fs.existsSync(path.resolve(options.cwd, outputDir))) {
     projectSpinner?.fail();
     logger.break();
     logger.error(
-      `A ${highlighter.info("registry")} directory doesn't exist at ${highlighter.info(
+      `A ${highlighter.info(outputDir)} directory doesn't exist at ${highlighter.info(
         options.cwd
       )}.\nTo start over, run ${highlighter.warn("`build`")}.`
     );
@@ -53,11 +57,11 @@ export async function preFlightPublish(
     process.exit(1);
   }
 
-  if (fs.readdirSync(path.resolve(options.cwd, "registry")).length === 0) {
+  if (fs.readdirSync(path.resolve(options.cwd, outputDir)).length === 0) {
     projectSpinner?.fail();
     logger.break();
     logger.error(
-      `The ${highlighter.info("registry")} directory is empty.\nTo start over, please registry your component in config file and run ${highlighter.warn(
+      `The ${highlighter.info(outputDir)} directory is empty.\nTo start over, please registry your component in config file and run ${highlighter.warn(
         "`build`"
       )}.`
     );

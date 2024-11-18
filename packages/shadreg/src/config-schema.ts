@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const configSchema = z.object({
   baseUrl: z.string(),
+  outputDir: z.string(),
   registries: z.array(registryEntrySchema),
 });
 
@@ -15,6 +16,7 @@ import { shadregConfig } from "shadreg";
 
 export default shadregConfig({
   baseUrl: "./src/components",
+  outputDir: "./shadreg",
   registries: [
     {
       name: "cool-text",

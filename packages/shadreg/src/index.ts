@@ -5,6 +5,7 @@ import { init } from "./commands/init";
 import packageJson from "../package.json";
 import { publish } from "./commands/publish";
 export * from "@/src/config-schema";
+export * from "@/src/utils/tools";
 
 process.on("SIGINT", () => process.exit(0));
 process.on("SIGTERM", () => process.exit(0));

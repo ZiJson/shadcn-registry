@@ -1,0 +1,20 @@
+{
+  "name": "cool-text",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "button"
+  ],
+  "dependencies": [],
+  "devDependencies": [],
+  "tailwind": {
+    "config": {}
+  },
+  "cssVars": {},
+  "files": [
+    {
+      "path": "cool-text.tsx",
+      "content": "const CoolText = () => {\n  return <div className=\"cool-text\">Cool Text</div>;\n};\n\nexport default CoolText;\n",
+      "type": "registry:ui"
+    }
+  ]
+}

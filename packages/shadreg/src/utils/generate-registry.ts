@@ -15,7 +15,7 @@ export const generateRegistry = async (config: RegistryConfig) => {
             const componentPath = path.join(baseUrl, file);
             let component = "";
             if (!fs.existsSync(componentPath)) {
-              logger.error(`File ${componentPath} does not exist, skipping.`);
+              logger.error(`File ${file} does not exist, skipping.`);
               return file;
             } else {
               component = await getComponentByPath(path.join(baseUrl, file));
@@ -34,7 +34,9 @@ export const generateRegistry = async (config: RegistryConfig) => {
     })
   );
 
-  return newRegistries.filter((r) => typeof r !== "string");
+  return newRegistries.filter((r) =>
+    r.files.every((f) => typeof f !== "string")
+  );
 };
 
 const getComponentByPath = async (path: string): Promise<string> => {

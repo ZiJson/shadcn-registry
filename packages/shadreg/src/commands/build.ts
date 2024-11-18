@@ -61,5 +61,5 @@ export const build = new Command()
       baseUrl: path.resolve(options.cwd, config.baseUrl),
     });
 
-    await writeRegistry(newRegistries, opts);
+    await writeRegistry(newRegistries, opts, config);
   });

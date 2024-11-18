@@ -1,7 +1,8 @@
 import { shadregConfig } from "shadreg";
 
 export default shadregConfig({
-  baseUrl: "./src/components",
+  baseUrl: "./src/test",
+  outputDir: "./shadreg",
   registries: [
     {
       name: "cool-text",

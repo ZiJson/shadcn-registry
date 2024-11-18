@@ -5,10 +5,12 @@ import { errorHandler } from "@/src/utils/errors";
 import { preFlightPublish } from "../preflights/preflight-publish";
 import { pushVercel } from "../utils/push-vercel";
 import fs from "fs-extra";
+import { loadRegistryConfig } from "../utils/loader";
 
 export const publishOptionsSchema = z.object({
   cwd: z.string(),
   force: z.boolean(),
+  outputDir: z.string(),
 });
 export type PublishOptions = z.infer<typeof publishOptionsSchema>;
 
@@ -17,6 +19,11 @@ export const publish = new Command()
   .description("Publish your built registries json file to Vercel Blob Store")
   .option("--cwd <cwd>", "Current working directory", process.cwd())
   .option("-f, --force", "force overwrite of existing configuration.", false)
+  .option(
+    "-o, --outputDir <outputDir>",
+    "Output directory for built registry files",
+    "shadreg"
+  )
   .action(async (opts) => {
     const options = publishOptionsSchema.parse({
       cwd: path.resolve(opts.cwd),
@@ -30,10 +37,15 @@ export const publish = new Command()
       process.exit(1);
     }
 
-    const urls = await pushVercel(options);
+    const { config, errors: getRegistryErrors } =
+      await loadRegistryConfig(options);
+
+    if (!config) return;
+
+    const urls = await pushVercel(options, config);
 
     fs.writeFileSync(
-      path.join(options.cwd, "registry_published.json"),
+      path.join(options.cwd, config.outputDir, "_published.json"),
       JSON.stringify(urls, null, 2)
     );
   });

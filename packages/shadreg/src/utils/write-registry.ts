@@ -4,12 +4,15 @@ import { BuildOptions } from "../commands/build";
 import { Registry } from "../schema";
 import { highlighter } from "./hightlighter";
 import { spinner } from "./spinner";
+import { RegistryConfig } from "../config-schema";
 
 export const writeRegistry = async (
   registries: Registry,
-  opts: BuildOptions
+  opts: BuildOptions,
+  config: RegistryConfig
 ) => {
-  const distPath = path.join(opts.cwd, "registry");
+  const { outputDir } = config;
+  const distPath = path.join(opts.cwd, outputDir);
   fs.ensureDirSync(distPath);
 
   for (const registry of registries) {
