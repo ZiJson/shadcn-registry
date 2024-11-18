@@ -3,6 +3,7 @@ import { Command } from "commander";
 import { build } from "./commands/build";
 import { init } from "./commands/init";
 import packageJson from "../package.json";
+import { publish } from "./commands/publish";
 export * from "@/src/config-schema";
 
 process.on("SIGINT", () => process.exit(0));
@@ -20,7 +21,7 @@ async function main() {
       "display the version number"
     );
 
-  program.addCommand(build).addCommand(init);
+  program.addCommand(build).addCommand(init).addCommand(publish);
 
   program.parse();
 }

@@ -34,6 +34,7 @@ export const preflightBuild = async (
     errors[ERRORS.MISSING_CONFIG_FILE] = true;
     return { errors };
   }
+  projectSpinner?.succeed();
 
   return { errors };
 };
