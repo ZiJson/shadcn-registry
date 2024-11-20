@@ -1,81 +1,72 @@
-# Turborepo starter
+# shadreg
 
-This is an official starter Turborepo.
+A CLI for generate shadcn registry json for your UI library.
 
-## Using this example
+## Usage
 
-Run the following command:
+Use the `init` command to initialize dependencies for a new project.
 
-```sh
-npx create-turbo@latest
+The `init` command installs dependencies, adds the `registry.config.ts` for config setting in your project root.
+
+```bash
+npx shadreg init
 ```
 
-## What's inside?
+### Config File Template
 
-This Turborepo includes the following packages/apps:
+```ts
+// registry.config.ts
 
-### Apps and Packages
+import { shadregConfig } from "shadreg";
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+export default shadregConfig({
+  baseUrl: "./src/components",
+  outputDir: "./shadreg",
+  registries: [
+    {
+      name: "cool-text",
+      type: "registry:ui",
+      registryDependencies: ["button"],
+      dependencies: [],
+      devDependencies: [],
+      tailwind: {
+        config: {},
+      },
+      cssVars: {},
+      files: ["cool-text.tsx"],
+    },
+  ],
+});
 ```
 
-### Develop
+## build
 
-To develop all apps and packages, run the following command:
+Use the `build` command to generate registry json files to your project.
 
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+```bash
+npx shadcn build
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+the `build` command will generate registry json files in `registry/` dir in your project root
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## publish
 
+Use the `publish` command to make your registry json files publicly accessible.
+
+```bash
+npx shadcn publish
 ```
-npx turbo link
+
+you must provide a [Vercel Blob](https://vercel.com/docs/storage/vercel-blob) token in your `.env` file.
+
+```bash
+BLOB_READ_WRITE_TOKEN=your-vercel-blob-token
 ```
 
-## Useful Links
+## Documentation
 
-Learn more about the power of Turborepo:
+Visit to view the documentation.
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+## License
+
+Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).

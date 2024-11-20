@@ -14,14 +14,17 @@ npx shadreg init
 
 ### Config File Template
 
-``` ts
+```ts
 // registry.config.ts
 
-export default {
-  baseUrl: "./src/components", // dir of your components
+import { shadregConfig } from "shadreg";
+
+export default shadregConfig({
+  baseUrl: "./src/components",
+  outputDir: "./shadreg",
   registries: [
     {
-      name: "cool-text", 
+      name: "cool-text",
       type: "registry:ui",
       registryDependencies: ["button"],
       dependencies: [],
@@ -33,34 +36,7 @@ export default {
       files: ["cool-text.tsx"],
     },
   ],
-};
-```
-
-if shadreg has installed, you can import the config type from pkg
-
-``` ts
-// registry.config.ts
-import {type RegistryConfig} from "shadreg"
-
-const config: RegistryConfig =  {
-  baseUrl: "./src/components", // dir of your components
-  registries: [
-    {
-      name: "cool-text", 
-      type: "registry:ui",
-      registryDependencies: ["button"],
-      dependencies: [],
-      devDependencies: [],
-      tailwind: {
-        config: {},
-      },
-      cssVars: {},
-      files: ["cool-text.tsx"],
-    },
-  ],
-};
-
-export default config
+});
 ```
 
 ## build
@@ -71,12 +47,25 @@ Use the `build` command to generate registry json files to your project.
 npx shadcn build
 ```
 
-the `build` command will generate registry json files in `registry/` dir in your project root 
+the `build` command will generate registry json files in `registry/` dir in your project root
 
+## publish
+
+Use the `publish` command to make your registry json files publicly accessible.
+
+```bash
+npx shadcn publish
+```
+
+you must provide a [Vercel Blob](https://vercel.com/docs/storage/vercel-blob) token in your `.env` file.
+
+```bash
+BLOB_READ_WRITE_TOKEN=your-vercel-blob-token
+```
 
 ## Documentation
 
-Visit  to view the documentation.
+Visit to view the documentation.
 
 ## License
 
