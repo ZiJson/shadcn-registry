@@ -5,7 +5,8 @@ import React, { useEffect, useState } from 'react'
 import { Demo } from '../ui/demo'
 import { themes } from 'prism-react-renderer'
 import prettier from 'prettier/standalone'
-import babelParser from 'prettier/parser-babel'
+import estreePlugin from 'prettier/plugins/estree'
+import tsPlugin from 'prettier/plugins/typescript'
 
 const scope: Parameters<typeof LiveProvider>[0]['scope'] = {
   cn,
@@ -42,8 +43,8 @@ const defaultDemoCode = `<Hero
 
 const formatCode = async (code: string) => {
   return await prettier.format(code, {
-    parser: 'babel',
-    plugins: [babelParser],
+    parser: 'typescript',
+    plugins: [estreePlugin, tsPlugin],
   })
 }
 
@@ -54,11 +55,10 @@ const ReactLive = () => {
 
   useEffect(() => {
     const timerId = setTimeout(async () => {
-      console.log('formatting code')
       const formattedCode = await formatCode(componentCode)
       setComponentCode(formattedCode)
       clearTimeout(timerId)
-    }, 3000)
+    }, 1000)
 
     return () => clearTimeout(timerId)
   }, [componentCode, demoCode])

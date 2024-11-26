@@ -1,5 +1,5 @@
 const CoolText = () => {
-  return <div className="cool-text">Cool Text</div>;
-};
+  return <div className="cool-text">Cool Text</div>
+}
 
-export default CoolText;
+export default CoolText

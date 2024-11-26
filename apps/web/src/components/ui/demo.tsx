@@ -1,5 +1,3 @@
-import { Card } from './card'
-
 interface Props {
   children: React.ReactNode
 }

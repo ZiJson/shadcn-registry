@@ -1,15 +1,15 @@
-import { registryEntrySchema } from "./schema";
-import { z } from "zod";
+import { registryEntrySchema } from './schema'
+import { z } from 'zod'
 
 export const configSchema = z.object({
   baseUrl: z.string(),
   outputDir: z.string(),
   registries: z.array(registryEntrySchema),
-});
+})
 
-export type RegistryConfig = z.infer<typeof configSchema>;
+export type RegistryConfig = z.infer<typeof configSchema>
 
-export const shadregConfig = (config: RegistryConfig) => config;
+export const shadregConfig = (config: RegistryConfig) => config
 
 export const configTemplate = `
 import { shadregConfig } from "shadreg";
@@ -32,4 +32,4 @@ export default shadregConfig({
     },
   ],
 });
-`;
+`

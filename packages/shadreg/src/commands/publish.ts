@@ -1,51 +1,51 @@
-import path from "path";
-import { Command } from "commander";
-import { z } from "zod";
-import { errorHandler } from "@/src/utils/errors";
-import { preFlightPublish } from "../preflights/preflight-publish";
-import { pushVercel } from "../utils/push-vercel";
-import fs from "fs-extra";
-import { loadRegistryConfig } from "../utils/loader";
+import path from 'path'
+import { Command } from 'commander'
+import { z } from 'zod'
+import { errorHandler } from '@/src/utils/errors'
+import { preFlightPublish } from '../preflights/preflight-publish'
+import { pushVercel } from '../utils/push-vercel'
+import fs from 'fs-extra'
+import { loadRegistryConfig } from '../utils/loader'
 
 export const publishOptionsSchema = z.object({
   cwd: z.string(),
   force: z.boolean(),
   outputDir: z.string(),
-});
-export type PublishOptions = z.infer<typeof publishOptionsSchema>;
+})
+export type PublishOptions = z.infer<typeof publishOptionsSchema>
 
 export const publish = new Command()
-  .name("publish")
-  .description("Publish your built registries json file to Vercel Blob Store")
-  .option("--cwd <cwd>", "Current working directory", process.cwd())
-  .option("-f, --force", "force overwrite of existing configuration.", false)
+  .name('publish')
+  .description('Publish your built registries json file to Vercel Blob Store')
+  .option('--cwd <cwd>', 'Current working directory', process.cwd())
+  .option('-f, --force', 'force overwrite of existing configuration.', false)
   .option(
-    "-o, --outputDir <outputDir>",
-    "Output directory for built registry files",
-    "shadreg"
+    '-o, --outputDir <outputDir>',
+    'Output directory for built registry files',
+    'shadreg',
   )
   .action(async (opts) => {
     const options = publishOptionsSchema.parse({
       cwd: path.resolve(opts.cwd),
       ...opts,
-    });
+    })
 
     // Uncomment these lines if preFlightInit and error handling are needed
-    const { errors: preflightErrors } = await preFlightPublish(options);
+    const { errors: preflightErrors } = await preFlightPublish(options)
     if (Object.values(preflightErrors).some((e) => e)) {
-      errorHandler(preflightErrors);
-      process.exit(1);
+      errorHandler(preflightErrors)
+      process.exit(1)
     }
 
     const { config, errors: getRegistryErrors } =
-      await loadRegistryConfig(options);
+      await loadRegistryConfig(options)
 
-    if (!config) return;
+    if (!config) return
 
-    const urls = await pushVercel(options, config);
+    const urls = await pushVercel(options, config)
 
     fs.writeFileSync(
-      path.join(options.cwd, config.outputDir, "_published.json"),
-      JSON.stringify(urls, null, 2)
-    );
-  });
+      path.join(options.cwd, config.outputDir, '_published.json'),
+      JSON.stringify(urls, null, 2),
+    )
+  })
