@@ -25,7 +25,7 @@ const Hero = ({ title, description, cmd }: Props) => {
       <h1 className="w-full bg-gradient-to-b from-black/80 to-black bg-clip-text pb-4 text-center text-5xl font-extrabold leading-tight text-transparent lg:text-6xl xl:leading-snug dark:from-white dark:to-[#AAAAAA]">
         {title}
       </h1>
-      <p className="max-h-[112px] w-full pb-4 text-center font-mono text-xl text-[#666666] md:max-h-[96px] md:text-xl dark:text-[#888888]">
+      <p className="w-full pb-4 text-center font-mono text-xl text-[#666666] md:text-xl dark:text-[#888888]">
         {description}
       </p>
       <p className="w-full text-center font-mono text-sm text-[#666666] md:text-base dark:text-[#888888]">
@@ -55,10 +55,12 @@ const ReactLive = () => {
 
   useEffect(() => {
     const timerId = setTimeout(async () => {
-      const formattedCode = await formatCode(componentCode)
-      setComponentCode(formattedCode)
+      const formattedComponent = await formatCode(componentCode)
+      const formattedDemo = await formatCode(demoCode)
+      setDemoCode(formattedDemo.split(";")[0])
+      setComponentCode(formattedComponent)
       clearTimeout(timerId)
-    }, 1000)
+    }, 2000)
 
     return () => clearTimeout(timerId)
   }, [componentCode, demoCode])
@@ -80,18 +82,24 @@ const ReactLive = () => {
       </div>
       <div className="col-span-2 flex flex-col items-center justify-center gap-5">
         <LiveProvider scope={scope} code={componentCode} theme={themes.oneDark}>
-          <LiveEditor
-            className="max-h-96 w-full overflow-auto rounded-sm"
-            onChange={(code) => {
-              setComponentCode(code)
-            }}
-          />
+          <div className="text-background-foreground rounded-sm bg-orange-400/80">
+            <p className="px-2 py-1 font-mono font-bold">Component</p>
+            <LiveEditor
+              className="max-h-96 w-full overflow-auto rounded-sm text-sm"
+              onChange={(code) => {
+                setComponentCode(code)
+              }}
+            />
+          </div>
         </LiveProvider>
         <LiveProvider scope={scope} code={demoCode} theme={themes.oneDark}>
-          <LiveEditor
-            className="max-h-96 w-full overflow-auto rounded-sm"
-            onChange={(code) => setDemoCode(code)}
-          />
+          <div className="text-background-foreground rounded-sm bg-orange-400/80">
+            <p className="px-2 py-1 font-mono font-bold">Demo</p>
+            <LiveEditor
+              className="max-h-96 w-full overflow-auto rounded-sm text-sm"
+              onChange={(code) => setDemoCode(code)}
+            />
+          </div>
         </LiveProvider>
       </div>
     </div>
