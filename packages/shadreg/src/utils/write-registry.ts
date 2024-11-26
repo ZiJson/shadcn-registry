@@ -1,10 +1,10 @@
-import path from 'path'
-import fs from 'fs-extra'
-import { BuildOptions } from '../commands/build'
-import { Registry } from '../schema'
-import { highlighter } from './hightlighter'
-import { spinner } from './spinner'
-import { RegistryConfig } from '../config-schema'
+import path from "path"
+import fs from "fs-extra"
+import { BuildOptions } from "../commands/build"
+import { Registry } from "../schema"
+import { highlighter } from "./hightlighter"
+import { spinner } from "./spinner"
+import { RegistryConfig } from "../config-schema"
 
 export const writeRegistry = async (
   registries: Registry,

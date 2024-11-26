@@ -1,11 +1,11 @@
-import path from 'path'
-import { Command } from 'commander'
-import { z } from 'zod'
-import { errorHandler } from '@/src/utils/errors'
-import { preFlightPublish } from '../preflights/preflight-publish'
-import { pushVercel } from '../utils/push-vercel'
-import fs from 'fs-extra'
-import { loadRegistryConfig } from '../utils/loader'
+import path from "path"
+import { Command } from "commander"
+import { z } from "zod"
+import { errorHandler } from "@/src/utils/errors"
+import { preFlightPublish } from "../preflights/preflight-publish"
+import { pushVercel } from "../utils/push-vercel"
+import fs from "fs-extra"
+import { loadRegistryConfig } from "../utils/loader"
 
 export const publishOptionsSchema = z.object({
   cwd: z.string(),
@@ -15,14 +15,14 @@ export const publishOptionsSchema = z.object({
 export type PublishOptions = z.infer<typeof publishOptionsSchema>
 
 export const publish = new Command()
-  .name('publish')
-  .description('Publish your built registries json file to Vercel Blob Store')
-  .option('--cwd <cwd>', 'Current working directory', process.cwd())
-  .option('-f, --force', 'force overwrite of existing configuration.', false)
+  .name("publish")
+  .description("Publish your built registries json file to Vercel Blob Store")
+  .option("--cwd <cwd>", "Current working directory", process.cwd())
+  .option("-f, --force", "force overwrite of existing configuration.", false)
   .option(
-    '-o, --outputDir <outputDir>',
-    'Output directory for built registry files',
-    'shadreg',
+    "-o, --outputDir <outputDir>",
+    "Output directory for built registry files",
+    "shadreg",
   )
   .action(async (opts) => {
     const options = publishOptionsSchema.parse({
@@ -45,7 +45,7 @@ export const publish = new Command()
     const urls = await pushVercel(options, config)
 
     fs.writeFileSync(
-      path.join(options.cwd, config.outputDir, '_published.json'),
+      path.join(options.cwd, config.outputDir, "_published.json"),
       JSON.stringify(urls, null, 2),
     )
   })

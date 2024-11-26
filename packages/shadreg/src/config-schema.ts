@@ -1,5 +1,5 @@
-import { registryEntrySchema } from './schema'
-import { z } from 'zod'
+import { registryEntrySchema } from "./schema"
+import { z } from "zod"
 
 export const configSchema = z.object({
   baseUrl: z.string(),

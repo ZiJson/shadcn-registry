@@ -1,11 +1,11 @@
-import path from 'path'
-import { Command } from 'commander'
-import { z } from 'zod'
-import { preflightBuild } from '@/src/preflights/preflight-build'
-import { loadRegistryConfig } from '@/src/utils/loader'
-import { generateRegistry } from '../utils/generate-registry'
-import { writeRegistry } from '../utils/write-registry'
-import { errorHandler } from '../utils/errors'
+import path from "path"
+import { Command } from "commander"
+import { z } from "zod"
+import { preflightBuild } from "@/src/preflights/preflight-build"
+import { loadRegistryConfig } from "@/src/utils/loader"
+import { generateRegistry } from "../utils/generate-registry"
+import { writeRegistry } from "../utils/write-registry"
+import { errorHandler } from "../utils/errors"
 
 export const buildOptionSchema = z.object({
   cwd: z.string(),
@@ -14,25 +14,25 @@ export const buildOptionSchema = z.object({
 export type BuildOptions = z.infer<typeof buildOptionSchema>
 
 export const build = new Command()
-  .name('build')
-  .description('build the registry files for your components')
+  .name("build")
+  .description("build the registry files for your components")
   .argument(
-    '[components...]',
-    'the components to add or a url to the component.',
+    "[components...]",
+    "the components to add or a url to the component.",
   )
-  .option('-y, --yes', 'skip confirmation prompt.', false)
-  .option('-o, --overwrite', 'overwrite existing files.', false)
+  .option("-y, --yes", "skip confirmation prompt.", false)
+  .option("-o, --overwrite", "overwrite existing files.", false)
   .option(
-    '-c, --cwd <cwd>',
-    'the working directory. defaults to the current directory.',
+    "-c, --cwd <cwd>",
+    "the working directory. defaults to the current directory.",
     process.cwd(),
   )
-  .option('-a, --all', 'add all available components', false)
-  .option('-p, --path <path>', 'the path to add the component to.')
-  .option('-s, --silent', 'mute output.', false)
+  .option("-a, --all", "add all available components", false)
+  .option("-p, --path <path>", "the path to add the component to.")
+  .option("-s, --silent", "mute output.", false)
   .option(
-    '--src-dir',
-    'use the src directory when creating a new project.',
+    "--src-dir",
+    "use the src directory when creating a new project.",
     false,
   )
   .action(async (_, opts) => {

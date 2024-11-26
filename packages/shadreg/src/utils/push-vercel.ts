@@ -1,12 +1,12 @@
-import { z } from 'zod'
-import { publishOptionsSchema } from '../commands/publish'
-import { put } from '@vercel/blob'
-import fs from 'fs-extra'
-import path from 'path'
-import { spinner } from './spinner'
-import { highlighter } from './hightlighter'
-import dotenv from 'dotenv'
-import { RegistryConfig } from '../config-schema'
+import { z } from "zod"
+import { publishOptionsSchema } from "../commands/publish"
+import { put } from "@vercel/blob"
+import fs from "fs-extra"
+import path from "path"
+import { spinner } from "./spinner"
+import { highlighter } from "./hightlighter"
+import dotenv from "dotenv"
+import { RegistryConfig } from "../config-schema"
 dotenv.config()
 
 export const pushVercel = async (
@@ -17,12 +17,12 @@ export const pushVercel = async (
 
   const urls: { name: string; url: string }[] = []
   for (const registry of registries) {
-    if (registry === '_published.json') continue
+    if (registry === "_published.json") continue
     const url = await readAndPush(
       path.join(options.cwd, config.outputDir),
       registry,
     )
-    urls.push({ name: registry.split('.')[0], url })
+    urls.push({ name: registry.split(".")[0], url })
   }
 
   return urls
@@ -34,7 +34,7 @@ const readAndPush = async (cwd: string, filePath: string) => {
 
   try {
     const { url } = await put(filePath, file, {
-      access: 'public',
+      access: "public",
     })
     Spinner.succeed(`Successfully pushed ${highlighter.success(filePath)}`)
     return url

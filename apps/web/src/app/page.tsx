@@ -1,4 +1,4 @@
-import ReactLive from '@/components/reactLive'
+import ReactLive from "@/components/reactLive"
 
 export default function Home() {
   return (

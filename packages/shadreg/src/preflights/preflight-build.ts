@@ -1,10 +1,10 @@
-import { z } from 'zod'
-import fs from 'fs-extra'
-import path from 'path'
-import { buildOptionSchema } from '../commands/build'
-import { logger } from '@/src/utils/logger'
-import { ERRORS } from '@/src/utils/errors'
-import { spinner } from '../utils/spinner'
+import { z } from "zod"
+import fs from "fs-extra"
+import path from "path"
+import { buildOptionSchema } from "../commands/build"
+import { logger } from "@/src/utils/logger"
+import { ERRORS } from "@/src/utils/errors"
+import { spinner } from "../utils/spinner"
 
 export const preflightBuild = async (
   options: z.infer<typeof buildOptionSchema>,
@@ -16,7 +16,7 @@ export const preflightBuild = async (
   // Check for empty project. We assume if no package.json exists, the project is empty.
   if (
     !fs.existsSync(options.cwd) ||
-    !fs.existsSync(path.resolve(options.cwd, 'package.json'))
+    !fs.existsSync(path.resolve(options.cwd, "package.json"))
   ) {
     projectSpinner?.fail()
     errors[ERRORS.MISSING_DIR_OR_EMPTY_PROJECT] = true
@@ -26,7 +26,7 @@ export const preflightBuild = async (
   }
 
   // Check if 'registry.config.ts' exists
-  if (!fs.existsSync(path.join(options.cwd, 'registry.config.ts'))) {
+  if (!fs.existsSync(path.join(options.cwd, "registry.config.ts"))) {
     projectSpinner?.fail()
     logger.error(
       "No 'registry.config.ts' found in the current working directory.",

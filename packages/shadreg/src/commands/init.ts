@@ -1,10 +1,10 @@
-import path from 'path'
-import { Command } from 'commander'
-import { z } from 'zod'
-import { preFlightInit } from '../preflights/preflight-init'
-import { errorHandler } from '@/src/utils/errors'
-import fs from 'fs-extra'
-import { configTemplate } from '../config-schema'
+import path from "path"
+import { Command } from "commander"
+import { z } from "zod"
+import { preFlightInit } from "../preflights/preflight-init"
+import { errorHandler } from "@/src/utils/errors"
+import fs from "fs-extra"
+import { configTemplate } from "../config-schema"
 
 export const initOptionsSchema = z.object({
   cwd: z.string(),
@@ -13,10 +13,10 @@ export const initOptionsSchema = z.object({
 export type InitOptions = z.infer<typeof initOptionsSchema>
 
 export const init = new Command()
-  .name('init')
+  .name("init")
   .description("Initialize the registry config file -- 'registry.config.ts'")
-  .option('--cwd <cwd>', 'Current working directory', process.cwd())
-  .option('-f, --force', 'force overwrite of existing configuration.', false)
+  .option("--cwd <cwd>", "Current working directory", process.cwd())
+  .option("-f, --force", "force overwrite of existing configuration.", false)
   .action(async (opts) => {
     const options = initOptionsSchema.parse({
       cwd: path.resolve(opts.cwd),
@@ -31,7 +31,7 @@ export const init = new Command()
     }
 
     fs.writeFileSync(
-      path.join(options.cwd, 'registry.config.ts'),
+      path.join(options.cwd, "registry.config.ts"),
       configTemplate,
     )
   })

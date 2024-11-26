@@ -1,7 +1,7 @@
 {
   "plugins": ["prettier-plugin-tailwindcss", "prettier/parser-babel"],
   "semi": false,
-  "singleQuote": true,
+  "singleQuote": false,
   "trailingComma": "all",
   "printWidth": 80
 }

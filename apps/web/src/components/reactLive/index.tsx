@@ -1,14 +1,14 @@
-'use client'
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
-import { cn } from '@/lib/utils'
-import React, { useEffect, useState } from 'react'
-import { Demo } from '../ui/demo'
-import { themes } from 'prism-react-renderer'
-import prettier from 'prettier/standalone'
-import estreePlugin from 'prettier/plugins/estree'
-import tsPlugin from 'prettier/plugins/typescript'
+"use client"
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live"
+import { cn } from "@/lib/utils"
+import React, { useEffect, useState } from "react"
+import { Demo } from "../ui/demo"
+import { themes } from "prism-react-renderer"
+import prettier from "prettier/standalone"
+import estreePlugin from "prettier/plugins/estree"
+import tsPlugin from "prettier/plugins/typescript"
 
-const scope: Parameters<typeof LiveProvider>[0]['scope'] = {
+const scope: Parameters<typeof LiveProvider>[0]["scope"] = {
   cn,
   ...React,
 }
@@ -43,7 +43,7 @@ const defaultDemoCode = `<Hero
 
 const formatCode = async (code: string) => {
   return await prettier.format(code, {
-    parser: 'typescript',
+    parser: "typescript",
     plugins: [estreePlugin, tsPlugin],
   })
 }
@@ -51,7 +51,7 @@ const formatCode = async (code: string) => {
 const ReactLive = () => {
   const [componentCode, setComponentCode] = useState(HeroCode)
   const [demoCode, setDemoCode] = useState(defaultDemoCode)
-  const fullCode = componentCode + '\nrender( ' + (demoCode || '123') + ' )'
+  const fullCode = componentCode + "\nrender( " + (demoCode || "123") + " )"
 
   useEffect(() => {
     const timerId = setTimeout(async () => {
