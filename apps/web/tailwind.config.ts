@@ -59,9 +59,9 @@ export default {
     },
   },
   plugins: [require("tailwindcss-animate")],
-  //   safelist: [
-  //     {
-  //       pattern: /./,
-  //     },
-  //   ],
+  // safelist: [
+  //   {
+  //     pattern: /./,
+  //   },
+  // ],
 } satisfies Config

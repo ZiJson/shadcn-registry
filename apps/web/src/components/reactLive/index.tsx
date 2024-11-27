@@ -7,38 +7,64 @@ import { themes } from "prism-react-renderer"
 import prettier from "prettier/standalone"
 import estreePlugin from "prettier/plugins/estree"
 import tsPlugin from "prettier/plugins/typescript"
+import { Check, Clipboard } from "lucide-react"
 
 const scope: Parameters<typeof LiveProvider>[0]["scope"] = {
   cn,
+  Check,
+  Clipboard,
   ...React,
 }
 
 const HeroCode = `interface Props {
-  title: string
-  description: string
-  cmd: string
+  title: string;
+  description: string;
+  cmd: string;
 }
 
 const Hero = ({ title, description, cmd }: Props) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(cmd);
+    setCopied(true);
+    const timeout = setTimeout(() => setCopied(false), 2000);
+
+    return () => clearTimeout(timeout); // Cleanup on unmount
+  };
+
   return (
     <div className="w-full pb-24">
       <h1 className="w-full bg-gradient-to-b from-black/80 to-black bg-clip-text pb-4 text-center text-5xl font-extrabold leading-tight text-transparent lg:text-6xl xl:leading-snug dark:from-white dark:to-[#AAAAAA]">
         {title}
       </h1>
-      <p className="w-full pb-4 text-center font-mono text-xl text-[#666666] md:text-xl dark:text-[#888888]">
+      <p className="max-h-[80px] w-full pb-4 text-center font-mono text-xl text-[#666666] md:max-h-[96px] md:text-xl dark:text-[#888888]">
         {description}
       </p>
-      <p className="w-full text-center font-mono text-sm text-[#666666] md:text-base dark:text-[#888888]">
+      <button
+        className="group flex w-full cursor-pointer items-center justify-center gap-2 text-center font-mono text-sm text-[#666666] md:text-base dark:text-[#888888]"
+        onClick={handleCopy}
+        aria-label="Copy command"
+      >
         {cmd}
-      </p>
+        {copied ? (
+          <Check size={18} strokeWidth={2} />
+        ) : (
+          <Clipboard
+            size={18}
+            strokeWidth={2}
+            className="opacity-0 transition-all group-hover:opacity-100"
+          />
+        )}
+      </button>
     </div>
-  )
-}`
+  );
+};`
 
 const defaultDemoCode = `<Hero
-    title="Share Your UI Library"
-    description="Shadreg is a powerful CLI to build and publish Shadcn component registries, making your UI library globally accessible."
-    cmd="npx shadreg@latest init"
+  title="Share Your UI Library"
+  description="Shadreg is a powerful CLI to build and publish Shadcn component registries, making your UI library globally accessible."
+  cmd="npx shadreg@latest init"
 />`
 
 const formatCode = async (code: string) => {
@@ -66,13 +92,14 @@ const ReactLive = () => {
   }, [componentCode, demoCode])
 
   return (
-    <div className="grid grid-cols-5 gap-10 h-[calc(100vh-2rem)] sm:h-[calc(100vh-5rem)] ">
-      <div className="col-span-3 ">
+    <div className="grid h-[calc(100vh-2rem)] grid-cols-5 gap-10 sm:h-[calc(100vh-5rem)]">
+      <div className="col-span-3">
         <LiveProvider
           code={fullCode}
           scope={scope}
           noInline
           theme={themes.oneDark}
+          language="tsx"
         >
           <Demo>
             <LivePreview />
@@ -81,23 +108,33 @@ const ReactLive = () => {
         </LiveProvider>
       </div>
       <div className="col-span-2 flex flex-col items-center justify-center gap-5">
-        <LiveProvider scope={scope} code={componentCode} theme={themes.oneDark}>
-          <div className="text-background-foreground rounded-sm bg-orange-400/80 w-full">
-            <p className="px-2 py-1 font-mono font-bold">Component</p>
+        <LiveProvider
+          scope={scope}
+          code={demoCode}
+          theme={themes.oneDark}
+          language="tsx"
+        >
+          <div className="text-background-foreground w-full rounded-sm bg-orange-400/80 shadow-lg">
+            <p className="px-2 py-1 font-bold">Demo</p>
             <LiveEditor
-              className="max-h-[20rem] w-full overflow-auto rounded-sm text-sm no-scrollbar"
-              onChange={(code) => {
-                setComponentCode(code)
-              }}
+              className="no-scrollbar max-h-[20rem] w-full overflow-auto rounded-sm text-sm"
+              onChange={(code) => setDemoCode(code)}
             />
           </div>
         </LiveProvider>
-        <LiveProvider scope={scope} code={demoCode} theme={themes.oneDark}>
-          <div className="text-background-foreground rounded-sm bg-orange-400/80 w-full">
-            <p className="px-2 py-1 font-mono font-bold">Demo</p>
+        <LiveProvider
+          scope={scope}
+          code={componentCode}
+          theme={themes.oneDark}
+          language="tsx"
+        >
+          <div className="text-background-foreground w-full rounded-sm bg-orange-400/80 shadow-lg">
+            <p className="px-2 py-1 font-bold">Component</p>
             <LiveEditor
-              className="max-h-[20rem] w-full overflow-auto rounded-sm text-sm no-scrollbar" 
-              onChange={(code) => setDemoCode(code)}
+              className="no-scrollbar max-h-[20rem] w-full overflow-auto rounded-sm text-sm"
+              onChange={(code) => {
+                setComponentCode(code)
+              }}
             />
           </div>
         </LiveProvider>
