@@ -66,8 +66,8 @@ const ReactLive = () => {
   }, [componentCode, demoCode])
 
   return (
-    <div className="grid h-[90vh] grid-cols-5 gap-10">
-      <div className="col-span-3">
+    <div className="grid grid-cols-5 gap-10 h-[calc(100vh-2rem)] sm:h-[calc(100vh-5rem)] ">
+      <div className="col-span-3 ">
         <LiveProvider
           code={fullCode}
           scope={scope}
@@ -82,10 +82,10 @@ const ReactLive = () => {
       </div>
       <div className="col-span-2 flex flex-col items-center justify-center gap-5">
         <LiveProvider scope={scope} code={componentCode} theme={themes.oneDark}>
-          <div className="text-background-foreground rounded-sm bg-orange-400/80">
+          <div className="text-background-foreground rounded-sm bg-orange-400/80 w-full">
             <p className="px-2 py-1 font-mono font-bold">Component</p>
             <LiveEditor
-              className="max-h-96 w-full overflow-auto rounded-sm text-sm"
+              className="max-h-[20rem] w-full overflow-auto rounded-sm text-sm no-scrollbar"
               onChange={(code) => {
                 setComponentCode(code)
               }}
@@ -93,10 +93,10 @@ const ReactLive = () => {
           </div>
         </LiveProvider>
         <LiveProvider scope={scope} code={demoCode} theme={themes.oneDark}>
-          <div className="text-background-foreground rounded-sm bg-orange-400/80">
+          <div className="text-background-foreground rounded-sm bg-orange-400/80 w-full">
             <p className="px-2 py-1 font-mono font-bold">Demo</p>
             <LiveEditor
-              className="max-h-96 w-full overflow-auto rounded-sm text-sm"
+              className="max-h-[20rem] w-full overflow-auto rounded-sm text-sm no-scrollbar" 
               onChange={(code) => setDemoCode(code)}
             />
           </div>
