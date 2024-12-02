@@ -8,6 +8,7 @@ import prettier from "prettier/standalone"
 import estreePlugin from "prettier/plugins/estree"
 import tsPlugin from "prettier/plugins/typescript"
 import { Check, Clipboard } from "lucide-react"
+import { uploadRegistry, deleteRegistry } from "@/actions/vercel"
 
 const scope: Parameters<typeof LiveProvider>[0]["scope"] = {
   cn,
@@ -48,7 +49,7 @@ const Hero = ({ title, description, cmd }: Props) => {
       >
         {cmd}
         {copied ? (
-          <Check size={18} strokeWidth={2} />
+          <Check size={18} strokeWidth={4} />
         ) : (
           <Clipboard
             size={18}
@@ -78,6 +79,7 @@ const ReactLive = () => {
   const [componentCode, setComponentCode] = useState(HeroCode)
   const [demoCode, setDemoCode] = useState(defaultDemoCode)
   const fullCode = componentCode + "\nrender( " + (demoCode || "123") + " )"
+  const [url, setUrl] = useState("")
 
   useEffect(() => {
     const timerId = setTimeout(async () => {
@@ -91,6 +93,12 @@ const ReactLive = () => {
     return () => clearTimeout(timerId)
   }, [componentCode, demoCode])
 
+  const publishRegistry = async (code: string) => {
+    url && (await deleteRegistry(url))
+    const registryUrl = await uploadRegistry(code)
+    setUrl(registryUrl)
+  }
+
   return (
     <div className="grid h-[calc(100vh-2rem)] grid-cols-5 gap-10 sm:h-[calc(100vh-5rem)]">
       <div className="col-span-3">
@@ -101,7 +109,10 @@ const ReactLive = () => {
           theme={themes.oneDark}
           language="tsx"
         >
-          <Demo>
+          <Demo
+            cmd={"npx shadcn@latest add " + url}
+            onClick={() => publishRegistry(fullCode)}
+          >
             <LivePreview />
           </Demo>
           <LiveError />
@@ -114,7 +125,7 @@ const ReactLive = () => {
           theme={themes.oneDark}
           language="tsx"
         >
-          <div className="text-background-foreground w-full rounded-sm bg-orange-400/80 shadow-lg">
+          <div className="text-primary-foreground bg-primary w-full rounded-sm shadow-lg">
             <p className="px-2 py-1 font-bold">Demo</p>
             <LiveEditor
               className="no-scrollbar max-h-[20rem] w-full overflow-auto rounded-sm text-sm"
@@ -128,7 +139,7 @@ const ReactLive = () => {
           theme={themes.oneDark}
           language="tsx"
         >
-          <div className="text-background-foreground w-full rounded-sm bg-orange-400/80 shadow-lg">
+          <div className="text-primary-foreground bg-primary w-full rounded-sm shadow-lg">
             <p className="px-2 py-1 font-bold">Component</p>
             <LiveEditor
               className="no-scrollbar max-h-[20rem] w-full overflow-auto rounded-sm text-sm"
