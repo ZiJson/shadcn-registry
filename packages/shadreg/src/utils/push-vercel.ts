@@ -9,20 +9,28 @@ import dotenv from "dotenv"
 import { RegistryConfig } from "../config-schema"
 dotenv.config()
 
+const ignoreList = ["_published.json", "index.mjs", "index.d.ts"]
+
 export const pushVercel = async (
   options: z.infer<typeof publishOptionsSchema>,
   config: RegistryConfig,
 ) => {
   const registries = fs.readdirSync(path.resolve(options.cwd, config.outputDir))
 
-  const urls: { name: string; url: string }[] = []
+  const urls: { name: string; url: string; registryEntry: string }[] = []
   for (const registry of registries) {
-    if (registry === "_published.json") continue
+    if (ignoreList.includes(registry)) continue
+
     const url = await readAndPush(
       path.join(options.cwd, config.outputDir),
       registry,
     )
-    urls.push({ name: registry.split(".")[0], url })
+
+    const registryEntry = fs.readFileSync(
+      path.join(options.cwd, config.outputDir, registry),
+      "utf-8",
+    )
+    urls.push({ name: registry.split(".")[0], url, registryEntry })
   }
 
   return urls

@@ -1,6 +1,7 @@
 [
   {
     "name": "cool-text",
-    "url": "https://mtzgr2vld0zbmziz.public.blob.vercel-storage.com/cool-text-okGlTk50q0GRlMinjF5aKh6Ro5qEOD.json"
+    "url": "https://mtzgr2vld0zbmziz.public.blob.vercel-storage.com/cool-text-H1xXa1jeAKRyNjQ8mEfwe6QvU15FLa.json",
+    "registryEntry": "{\n  \"name\": \"cool-text\",\n  \"type\": \"registry:ui\",\n  \"registryDependencies\": [\n    \"button\"\n  ],\n  \"dependencies\": [],\n  \"devDependencies\": [],\n  \"tailwind\": {\n    \"config\": {}\n  },\n  \"cssVars\": {},\n  \"files\": [\n    {\n      \"path\": \"cool-text.tsx\",\n      \"content\": \"const CoolText = () => {\\n  return <div className=\\\"cool-text\\\">Cool Text</div>\\n}\\n\\nexport default CoolText\\n\",\n      \"type\": \"registry:ui\"\n    }\n  ]\n}\n"
   }
 ]

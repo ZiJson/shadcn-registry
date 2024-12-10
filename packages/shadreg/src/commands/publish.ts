@@ -42,10 +42,32 @@ export const publish = new Command()
 
     if (!config) return
 
-    const urls = await pushVercel(options, config)
+    const generatedRegistry = await pushVercel(options, config)
 
     fs.writeFileSync(
       path.join(options.cwd, config.outputDir, "_published.json"),
-      JSON.stringify(urls, null, 2),
+      JSON.stringify(generatedRegistry, null, 2),
+    )
+    fs.writeFileSync(
+      path.join(options.cwd, config.outputDir, "index.mjs"),
+      IndexMjs,
+    )
+    fs.writeFileSync(
+      path.join(options.cwd, config.outputDir, "index.d.ts"),
+      IndexDts,
     )
   })
+
+const IndexMjs = `import published from "./_published.json" assert { type: "json" }
+
+export const allRegistries = [...published]
+`
+
+const IndexDts = `type GeneratedRegistry = {
+  name: string
+  url: string
+  registryEntry: string
+}
+
+export declare const allRegistries: GeneratedRegistry[]
+`

@@ -1,4 +1,4 @@
-import { Check, Clipboard } from "lucide-react"
+import { Check, Clipboard, LoaderCircle } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Button } from "./button"
 import { codeToHtml } from "shiki"
@@ -6,7 +6,7 @@ import { codeToHtml } from "shiki"
 interface Props {
   children: React.ReactNode
   cmd: string
-  onClick?: () => void
+  onClick?: () => Promise<void>
 }
 
 export const Demo = ({
@@ -16,6 +16,7 @@ export const Demo = ({
 }: Props) => {
   const [copied, setCopied] = useState(false)
   const [code, serCode] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
   codeToHtml(cmd, {
     lang: "bash",
     theme: "dracula",
@@ -25,6 +26,16 @@ export const Demo = ({
       serCode(code)
     })
   }, [cmd])
+
+  const handleClick = async () => {
+    setIsLoading(true)
+    try {
+      await onClick?.()
+      setIsLoading(false)
+    } catch (e) {
+      setIsLoading(false)
+    }
+  }
 
   const handleCopy = () => {
     navigator.clipboard.writeText(cmd)
@@ -40,7 +51,7 @@ export const Demo = ({
       </div>
       {code && (
         <div className="flex flex-col opacity-0 transition-all duration-300 group-hover/demo:opacity-100">
-          <p className="pl-1 text-sm text-gray-400">Installation :</p>
+          <p className="pl-1 text-sm text-gray-400">UI Installation :</p>
           <div className="flex items-center gap-2">
             <div className="bg-background border-border flex gap-5 rounded-sm border px-4 py-1">
               <p
@@ -51,7 +62,14 @@ export const Demo = ({
                 {copied ? <Check size={16} /> : <Clipboard size={16} />}
               </button>
             </div>
-            {onClick && <Button onClick={onClick}>Publish</Button>}
+            {onClick && (
+              <Button onClick={handleClick}>
+                <div className="flex items-center justify-center gap-2">
+                  Publish{" "}
+                  {isLoading && <LoaderCircle className="animate-spin" />}
+                </div>
+              </Button>
+            )}
           </div>
         </div>
       )}

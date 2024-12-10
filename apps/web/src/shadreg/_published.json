@@ -1,0 +1,17 @@
+[
+  {
+    "name": "cool-text",
+    "url": "https://mtzgr2vld0zbmziz.public.blob.vercel-storage.com/cool-text-Lbsm5bAhMZGUHLWEoKWkdVe4kzNs4w.json",
+    "registryEntry": "{\n  \"name\": \"cool-text\",\n  \"type\": \"registry:ui\",\n  \"registryDependencies\": [\n    \"button\"\n  ],\n  \"dependencies\": [],\n  \"devDependencies\": [],\n  \"tailwind\": {\n    \"config\": {}\n  },\n  \"cssVars\": {},\n  \"files\": [\n    {\n      \"path\": \"cool-text.tsx\",\n      \"content\": \"const CoolText = () => {\\n  return <div className=\\\"cool-text\\\">Cool Text</div>\\n}\\n\\nexport default CoolText\\n\",\n      \"type\": \"registry:ui\"\n    }\n  ]\n}\n"
+  },
+  {
+    "name": "index",
+    "url": "https://mtzgr2vld0zbmziz.public.blob.vercel-storage.com/index.d-UCOgzRTdBTUxOnFDWlLztyh8EhFaVs.ts",
+    "registryEntry": "\"type GeneratedRegistry = {\\n  name: string\\n  url: string\\n  registryEntry: string\\n}\\n\\nexport declare const allRegistries: GeneratedRegistry[]\\n\""
+  },
+  {
+    "name": "index",
+    "url": "https://mtzgr2vld0zbmziz.public.blob.vercel-storage.com/index-vjQVV7X2b7XGRl40wqTfv8OKlREm5y.mjs",
+    "registryEntry": "\"import { published } from \\\"./_published.json\\\"\\n\\nexport const allRegistries = [...published]\\n\""
+  }
+]
