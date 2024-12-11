@@ -6,10 +6,8 @@ export enum ERRORS {
   MISSING_DIR_OR_EMPTY_PROJECT = "Cannot find a package.json in the current working directory.",
 }
 
-export const errorHandler = (errors: Record<string, boolean>) => {
-  for (const error in errors) {
-    if (errors[error]) {
-      logger.error(error)
-    }
-  }
+export const errorHandler = (error: ERRORS) => {
+  logger.break()
+  logger.error(error)
+  process.exit(1)
 }

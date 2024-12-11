@@ -1,17 +1,18 @@
 import path from "path"
 import { publishOptionsSchema } from "@/src/commands/publish"
-import { ERRORS } from "@/src/utils/errors"
+import { errorHandler, ERRORS } from "@/src/utils/errors"
 import { highlighter } from "@/src/utils/hightlighter"
 import { logger } from "@/src/utils/logger"
 import { spinner } from "@/src/utils/spinner"
 import fs from "fs-extra"
 import { z } from "zod"
 import { loadRegistryConfig } from "../utils/loader"
+import { shadregExplorer } from "../utils/cosmiconfig"
+import { RegistryConfig } from "../config-schema"
 
 export async function preFlightPublish(
   options: z.infer<typeof publishOptionsSchema>,
 ) {
-  const errors: Record<string, boolean> = {}
   const projectSpinner = spinner(`Preflight checks.`).start()
 
   // Ensure target directory exists.
@@ -20,58 +21,37 @@ export async function preFlightPublish(
     !fs.existsSync(options.cwd) ||
     !fs.existsSync(path.resolve(options.cwd, "package.json"))
   ) {
-    projectSpinner?.fail()
-    errors[ERRORS.MISSING_DIR_OR_EMPTY_PROJECT] = true
-    return {
-      errors,
-      projectInfo: null,
-    }
+    projectSpinner.fail()
+    errorHandler(ERRORS.MISSING_DIR_OR_EMPTY_PROJECT)
   }
 
-  if (!fs.existsSync(path.resolve(options.cwd, "registry.config.ts"))) {
-    projectSpinner?.fail()
+  // Check if config file already exists
+  const config = (await shadregExplorer
+    .search(options.cwd)
+    .then((result) => result?.config)) as RegistryConfig
+
+  if (!config) {
     logger.break()
-    logger.error(
-      `A ${highlighter.info(
-        "registry.config.ts",
-      )} file doesn't exist at ${highlighter.info(
-        options.cwd,
-      )}.\nTo start over, run ${highlighter.warn("`init`")}.`,
-    )
-    logger.break()
+    logger.error("No config file found in the current working directory.")
+    projectSpinner.fail('To start over, please run "init" command first.')
     process.exit(1)
   }
 
-  const { config, errors: getRegistryErrors } =
-    await loadRegistryConfig(options)
-  const outputDir = config?.outputDir || "shadreg"
-  if (!fs.existsSync(path.resolve(options.cwd, outputDir))) {
-    projectSpinner?.fail()
-    logger.break()
-    logger.error(
-      `A ${highlighter.info(outputDir)} directory doesn't exist at ${highlighter.info(
-        options.cwd,
-      )}.\nTo start over, run ${highlighter.warn("`build`")}.`,
-    )
-    logger.break()
-    process.exit(1)
-  }
+  // console.log(
+  //   fs.readJSONSync(path.resolve(options.cwd, outputDir, "./_generated.json")),
+  // )
 
-  if (fs.readdirSync(path.resolve(options.cwd, outputDir)).length === 0) {
-    projectSpinner?.fail()
-    logger.break()
-    logger.error(
-      `The ${highlighter.info(outputDir)} directory is empty.\nTo start over, please registry your component in config file and run ${highlighter.warn(
-        "`build`",
-      )}.`,
-    )
-    logger.break()
-    process.exit(1)
-  }
+  // const outputDir = config?.outputDir || "shadreg"
+  // if (
+  //   !fs.existsSync(path.resolve(options.cwd, outputDir, "./_generated.json")) ||
+  //   fs.readJSONSync(path.resolve(options.cwd, outputDir, "./_generated.json"))
+  //     .length === 0
+  // ) {
+  //   logger.break()
+  //   logger.error("You haven't generated anything yet")
+  //   projectSpinner?.fail('To start over, please run "build" command first')
+  //   process.exit(1)
+  // }
 
   projectSpinner?.succeed()
-
-  return {
-    errors,
-  }
 }

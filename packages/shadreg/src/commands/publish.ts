@@ -10,7 +10,6 @@ import { loadRegistryConfig } from "../utils/loader"
 export const publishOptionsSchema = z.object({
   cwd: z.string(),
   force: z.boolean(),
-  outputDir: z.string(),
 })
 export type PublishOptions = z.infer<typeof publishOptionsSchema>
 
@@ -18,12 +17,6 @@ export const publish = new Command()
   .name("publish")
   .description("Publish your built registries json file to Vercel Blob Store")
   .option("--cwd <cwd>", "Current working directory", process.cwd())
-  .option("-f, --force", "force overwrite of existing configuration.", false)
-  .option(
-    "-o, --outputDir <outputDir>",
-    "Output directory for built registry files",
-    "shadreg",
-  )
   .action(async (opts) => {
     const options = publishOptionsSchema.parse({
       cwd: path.resolve(opts.cwd),
@@ -31,31 +24,27 @@ export const publish = new Command()
     })
 
     // Uncomment these lines if preFlightInit and error handling are needed
-    const { errors: preflightErrors } = await preFlightPublish(options)
-    if (Object.values(preflightErrors).some((e) => e)) {
-      errorHandler(preflightErrors)
-      process.exit(1)
-    }
+    // await preFlightPublish(options)
 
-    const { config, errors: getRegistryErrors } =
-      await loadRegistryConfig(options)
+    // const { config, errors: getRegistryErrors } =
+    //   await loadRegistryConfig(options)
 
-    if (!config) return
+    // if (!config) return
 
-    const generatedRegistry = await pushVercel(options, config)
+    // const generatedRegistry = await pushVercel(options, config)
 
-    fs.writeFileSync(
-      path.join(options.cwd, config.outputDir, "_published.json"),
-      JSON.stringify(generatedRegistry, null, 2),
-    )
-    fs.writeFileSync(
-      path.join(options.cwd, config.outputDir, "index.mjs"),
-      IndexMjs,
-    )
-    fs.writeFileSync(
-      path.join(options.cwd, config.outputDir, "index.d.ts"),
-      IndexDts,
-    )
+    // fs.writeFileSync(
+    //   path.join(options.cwd, config.outputDir, "_published.json"),
+    //   JSON.stringify(generatedRegistry, null, 2),
+    // )
+    // fs.writeFileSync(
+    //   path.join(options.cwd, config.outputDir, "index.mjs"),
+    //   IndexMjs,
+    // )
+    // fs.writeFileSync(
+    //   path.join(options.cwd, config.outputDir, "index.d.ts"),
+    //   IndexDts,
+    // )
   })
 
 const IndexMjs = `import published from "./_published.json" assert { type: "json" }

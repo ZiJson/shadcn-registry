@@ -1,4 +1,4 @@
-import { shadregConfig } from "shadreg"
+import { shadregConfig } from "shadreg";
 
 export default shadregConfig({
   baseUrl: "./src/test",
@@ -17,4 +17,4 @@ export default shadregConfig({
       files: ["cool-text.tsx"],
     },
   ],
-})
+});

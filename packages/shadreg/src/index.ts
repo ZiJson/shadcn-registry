@@ -13,7 +13,7 @@ async function main() {
   const program = new Command()
 
   program
-    .name("shadcn-registry")
+    .name("shadreg")
     .description("CLI to build Shadcn registry file of your componenets")
     .version(
       packageJson.version || "1.0.0",
@@ -21,7 +21,7 @@ async function main() {
       "display the version number",
     )
 
-  program.addCommand(build).addCommand(init).addCommand(publish)
+  program.addCommand(init).addCommand(build).addCommand(publish)
 
   program.parse()
 }

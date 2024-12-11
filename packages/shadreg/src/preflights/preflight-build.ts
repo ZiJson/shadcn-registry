@@ -3,13 +3,13 @@ import fs from "fs-extra"
 import path from "path"
 import { buildOptionSchema } from "../commands/build"
 import { logger } from "@/src/utils/logger"
-import { ERRORS } from "@/src/utils/errors"
+import { errorHandler, ERRORS } from "@/src/utils/errors"
 import { spinner } from "../utils/spinner"
+import { shadregExplorer } from "../utils/cosmiconfig"
 
 export const preflightBuild = async (
   options: z.infer<typeof buildOptionSchema>,
 ) => {
-  const errors: Record<string, boolean> = {}
   const projectSpinner = spinner(`Preflight checks.`).start()
 
   // Ensure target directory exists.
@@ -18,23 +18,19 @@ export const preflightBuild = async (
     !fs.existsSync(options.cwd) ||
     !fs.existsSync(path.resolve(options.cwd, "package.json"))
   ) {
-    projectSpinner?.fail()
-    errors[ERRORS.MISSING_DIR_OR_EMPTY_PROJECT] = true
-    return {
-      errors,
-    }
+    projectSpinner.fail()
+    errorHandler(ERRORS.MISSING_DIR_OR_EMPTY_PROJECT)
   }
 
-  // Check if 'registry.config.ts' exists
-  if (!fs.existsSync(path.join(options.cwd, "registry.config.ts"))) {
-    projectSpinner?.fail()
-    logger.error(
-      "No 'registry.config.ts' found in the current working directory.",
-    )
-    errors[ERRORS.MISSING_CONFIG_FILE] = true
-    return { errors }
+  // Check if config file already exists
+  const configFile = await shadregExplorer
+    .search(options.cwd)
+    .then((result) => result?.filepath.split("/").pop())
+  if (!configFile) {
+    logger.break()
+    logger.error("No config file found in the current working directory.")
+    projectSpinner.fail('To start over, please run "init" command first.')
+    process.exit(1)
   }
-  projectSpinner?.succeed()
-
-  return { errors }
+  projectSpinner.succeed()
 }

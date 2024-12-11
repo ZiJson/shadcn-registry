@@ -2,9 +2,7 @@ import path from "path"
 import { Command } from "commander"
 import { z } from "zod"
 import { preFlightInit } from "../preflights/preflight-init"
-import { errorHandler } from "@/src/utils/errors"
-import fs from "fs-extra"
-import { configTemplate } from "../config-schema"
+import { writeConfig } from "../utils/write-config"
 
 export const initOptionsSchema = z.object({
   cwd: z.string(),
@@ -24,14 +22,7 @@ export const init = new Command()
     })
 
     // Uncomment these lines if preFlightInit and error handling are needed
-    const { errors: preflightErrors } = await preFlightInit(options)
-    if (Object.values(preflightErrors).some((e) => e)) {
-      errorHandler(preflightErrors)
-      process.exit(1)
-    }
+    await preFlightInit(options)
 
-    fs.writeFileSync(
-      path.join(options.cwd, "registry.config.ts"),
-      configTemplate,
-    )
+    await writeConfig(options.cwd)
   })
