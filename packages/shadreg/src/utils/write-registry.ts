@@ -1,10 +1,10 @@
 import path from "path"
 import fs from "fs-extra"
 import { BuildOptions } from "../commands/build"
-import { Registry } from "../schema"
+import { Registry, RegistryEntry } from "../schema"
 import { highlighter } from "./hightlighter"
 import { spinner } from "./spinner"
-import { RegistryConfig } from "../config-schema"
+import { GeneratedRegistry, RegistryConfig } from "../config-schema"
 import { shadregExplorer } from "./cosmiconfig"
 import { logger } from "./logger"
 
@@ -31,10 +31,19 @@ export const writeRegistry = async (
     }
   }
 
+  const generated: GeneratedRegistry[] = registries.map((registry) => ({
+    name: registry.name,
+    entry: registry,
+  }))
+
   const Spinner = spinner(`Processing ...`).start()
-  await fs.writeJSON(path.join(distPath, "./_generated.json"), registries, {
+  await fs.writeJSON(path.join(distPath, "./_generated.json"), generated, {
     spaces: 2,
   })
+
+  fs.writeFileSync(path.join(opts.cwd, outputDir, "index.mjs"), IndexMjs)
+  fs.writeFileSync(path.join(opts.cwd, outputDir, "index.d.ts"), IndexDts)
+
   Spinner.succeed(
     `Generated ${highlighter.success(registries.length)} json files`,
   )
@@ -42,3 +51,12 @@ export const writeRegistry = async (
   logger.break()
   logger.log(`View ${distPath}`)
 }
+
+const IndexMjs = `import generated from "./_generated.json" assert { type: "json" }
+
+export const allRegistries = [...generated]
+`
+
+const IndexDts = `import { type GeneratedRegistry } from "shadreg"
+
+export declare const allRegistries: GeneratedRegistry[]`

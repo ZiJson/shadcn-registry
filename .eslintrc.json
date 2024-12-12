@@ -6,6 +6,10 @@
     "es2021": true
   },
   "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2022, // 支持最新的 ES 語法
+    "sourceType": "module" // 確保支持 ESM
+  },
   "rules": {
     "prettier/prettier": "warn"
   }

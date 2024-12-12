@@ -1,15 +1,18 @@
 import path from "path"
 import { Command } from "commander"
 import { z } from "zod"
-import { errorHandler } from "@/src/utils/errors"
 import { preFlightPublish } from "../preflights/preflight-publish"
 import { pushVercel } from "../utils/push-vercel"
 import fs from "fs-extra"
-import { loadRegistryConfig } from "../utils/loader"
+import { shadregExplorer } from "../utils/cosmiconfig"
+import { RegistryConfig } from "../config-schema"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 export const publishOptionsSchema = z.object({
   cwd: z.string(),
-  force: z.boolean(),
+  token: z.string(),
 })
 export type PublishOptions = z.infer<typeof publishOptionsSchema>
 
@@ -17,46 +20,28 @@ export const publish = new Command()
   .name("publish")
   .description("Publish your built registries json file to Vercel Blob Store")
   .option("--cwd <cwd>", "Current working directory", process.cwd())
+  .option(
+    "--token <token>",
+    "Vercel Blob token",
+    process.env.BLOB_READ_WRITE_TOKEN,
+  )
   .action(async (opts) => {
     const options = publishOptionsSchema.parse({
       cwd: path.resolve(opts.cwd),
       ...opts,
     })
+    process.env.BLOB_READ_WRITE_TOKEN = options.token
 
-    // Uncomment these lines if preFlightInit and error handling are needed
-    // await preFlightPublish(options)
+    await preFlightPublish(options)
 
-    // const { config, errors: getRegistryErrors } =
-    //   await loadRegistryConfig(options)
+    const generatedRegistry = await pushVercel(options)
 
-    // if (!config) return
+    const config = (await shadregExplorer.search(options.cwd))!
+      .config as RegistryConfig
 
-    // const generatedRegistry = await pushVercel(options, config)
-
-    // fs.writeFileSync(
-    //   path.join(options.cwd, config.outputDir, "_published.json"),
-    //   JSON.stringify(generatedRegistry, null, 2),
-    // )
-    // fs.writeFileSync(
-    //   path.join(options.cwd, config.outputDir, "index.mjs"),
-    //   IndexMjs,
-    // )
-    // fs.writeFileSync(
-    //   path.join(options.cwd, config.outputDir, "index.d.ts"),
-    //   IndexDts,
-    // )
+    fs.writeJsonSync(
+      path.join(options.cwd, config.outputDir, "_generated.json"),
+      generatedRegistry,
+      { spaces: 2 },
+    )
   })
-
-const IndexMjs = `import published from "./_published.json" assert { type: "json" }
-
-export const allRegistries = [...published]
-`
-
-const IndexDts = `type GeneratedRegistry = {
-  name: string
-  url: string
-  registryEntry: string
-}
-
-export declare const allRegistries: GeneratedRegistry[]
-`

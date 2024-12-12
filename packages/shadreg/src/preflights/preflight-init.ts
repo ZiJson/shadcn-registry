@@ -43,7 +43,7 @@ export async function preFlightInit(
         {
           type: "confirm",
           name: "force",
-          message: `A ${configFile} file already exists. Overwrite it?`,
+          message: `A ${highlighter.info(configFile)} file already exists. Overwrite it?`,
         },
       ])
       if (!answers.force) {

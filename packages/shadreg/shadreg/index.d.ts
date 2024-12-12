@@ -1,7 +1,3 @@
-type GeneratedRegistry = {
-  name: string
-  url: string
-  registryEntry: string
-}
+import { type GeneratedRegistry } from "shadreg"
 
 export declare const allRegistries: GeneratedRegistry[]

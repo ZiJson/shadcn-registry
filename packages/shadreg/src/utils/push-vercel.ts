@@ -5,49 +5,40 @@ import fs from "fs-extra"
 import path from "path"
 import { spinner } from "./spinner"
 import { highlighter } from "./hightlighter"
-import dotenv from "dotenv"
-import { RegistryConfig } from "../config-schema"
-dotenv.config()
-
-const ignoreList = ["_published.json", "index.mjs", "index.d.ts"]
+import { GeneratedRegistry, RegistryConfig } from "../config-schema"
+import { shadregExplorer } from "./cosmiconfig"
+import { logger } from "./logger"
 
 export const pushVercel = async (
   options: z.infer<typeof publishOptionsSchema>,
-  config: RegistryConfig,
 ) => {
-  const registries = fs.readdirSync(path.resolve(options.cwd, config.outputDir))
+  const config = (await shadregExplorer.search(options.cwd))!
+    .config as RegistryConfig
+  const registries: GeneratedRegistry[] = fs.readJsonSync(
+    path.resolve(options.cwd, config.outputDir, "./_generated.json"),
+  )
 
-  const urls: { name: string; url: string; registryEntry: string }[] = []
+  const newGenerated: GeneratedRegistry[] = registries
   for (const registry of registries) {
-    if (ignoreList.includes(registry)) continue
-
-    const url = await readAndPush(
-      path.join(options.cwd, config.outputDir),
-      registry,
+    const putSpinner = spinner(
+      `Pushing ${highlighter.info(registry.name)}`,
+    ).start()
+    const { url } = await put(
+      registry.name + ".json",
+      JSON.stringify(registry.entry),
+      {
+        access: "public",
+      },
     )
-
-    const registryEntry = fs.readFileSync(
-      path.join(options.cwd, config.outputDir, registry),
-      "utf-8",
-    )
-    urls.push({ name: registry.split(".")[0], url, registryEntry })
+    putSpinner.succeed()
+    newGenerated.find((r) => r.name === registry.name)!.url = url
   }
 
-  return urls
-}
+  logger.break()
+  logger.success(`Successfully published ${newGenerated.length} registries.`)
+  logger.log(
+    `View ${path.resolve(options.cwd, config.outputDir, "./_generated.json")}`,
+  )
 
-const readAndPush = async (cwd: string, filePath: string) => {
-  const file = fs.readFileSync(path.join(cwd, filePath))
-  const Spinner = spinner(`Pushing ${highlighter.info(filePath)}`).start()
-
-  try {
-    const { url } = await put(filePath, file, {
-      access: "public",
-    })
-    Spinner.succeed(`Successfully pushed ${highlighter.success(filePath)}`)
-    return url
-  } catch (error) {
-    Spinner.fail(`Failed to push ${highlighter.error(filePath)}`)
-    throw error
-  }
+  return newGenerated
 }

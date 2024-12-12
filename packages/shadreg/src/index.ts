@@ -14,7 +14,7 @@ async function main() {
 
   program
     .name("shadreg")
-    .description("CLI to build Shadcn registry file of your componenets")
+    .description("CLI to build Shadcn registry file of your components")
     .version(
       packageJson.version || "1.0.0",
       "-v, --version",

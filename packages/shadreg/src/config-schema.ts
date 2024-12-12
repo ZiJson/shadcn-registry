@@ -1,4 +1,4 @@
-import { registryEntrySchema } from "./schema"
+import { RegistryEntry, registryEntrySchema } from "./schema"
 import { z } from "zod"
 
 export const configSchema = z.object({
@@ -10,6 +10,12 @@ export const configSchema = z.object({
 export type RegistryConfig = z.infer<typeof configSchema>
 
 export const shadregConfig = (config: RegistryConfig) => config
+
+export type GeneratedRegistry = {
+  name: string
+  url?: string
+  entry: RegistryEntry
+}
 
 export const configTemplate = `
 import { shadregConfig } from "shadreg";

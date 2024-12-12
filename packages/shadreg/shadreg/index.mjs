@@ -1,3 +1,3 @@
-import published from "./_published.json" assert { type: "json" }
+import generated from "./_generated.json" assert { type: "json" }
 
-export const allRegistries = [...published]
+export const allRegistries = [...generated]
