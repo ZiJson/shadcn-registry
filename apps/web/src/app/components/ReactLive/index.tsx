@@ -2,7 +2,7 @@
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live"
 import { cn } from "@/lib/utils"
 import React, { useEffect, useState } from "react"
-import { Demo } from "../ui/demo"
+import { Demo } from "../../../components/ui/demo"
 import { themes } from "prism-react-renderer"
 import prettier from "prettier/standalone"
 import estreePlugin from "prettier/plugins/estree"
@@ -100,7 +100,7 @@ const ReactLive = () => {
   }
 
   return (
-    <div className="grid h-[calc(100vh-2rem)] grid-cols-5 gap-10 sm:h-[calc(100vh-5rem)]">
+    <div className="grid h-[calc(100vh-2rem)] grid-cols-5 gap-5 sm:h-[calc(100vh-5rem)]">
       <div className="col-span-3">
         <LiveProvider
           code={fullCode}

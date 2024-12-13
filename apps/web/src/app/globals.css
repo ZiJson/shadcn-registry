@@ -8,48 +8,63 @@ body {
 
 @layer base {
   :root {
-    --background: 26 100% 100%;
-    --foreground: 26 5% 10%;
-    --card: 26 50% 100%;
-    --card-foreground: 26 5% 15%;
-    --popover: 26 100% 100%;
-    --popover-foreground: 26 100% 10%;
-    --primary: 26 81% 58%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 26 30% 90%;
+    --background: 242 100% 100%;
+    --foreground: 242 5% 10%;
+    --card: 242 50% 100%;
+    --card-foreground: 242 5% 15%;
+    --popover: 242 100% 100%;
+    --popover-foreground: 242 100% 10%;
+    --primary: 242 22% 72%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 242 30% 90%;
     --secondary-foreground: 0 0% 0%;
-    --muted: -12 30% 95%;
-    --muted-foreground: 26 5% 40%;
-    --accent: -12 30% 90%;
-    --accent-foreground: 26 5% 15%;
+    --muted: 204 30% 95%;
+    --muted-foreground: 242 5% 40%;
+    --accent: 204 30% 90%;
+    --accent-foreground: 242 5% 15%;
     --destructive: 0 100% 50%;
-    --destructive-foreground: 26 5% 100%;
-    --border: 26 30% 82%;
-    --input: 26 30% 50%;
-    --ring: 26 81% 58%;
+    --destructive-foreground: 242 5% 100%;
+    --border: 242 30% 82%;
+    --input: 242 30% 50%;
+    --ring: 242 22% 72%;
     --radius: 0.75rem;
   }
   .dark {
-    --background: 26 50% 10%;
-    --foreground: 26 5% 100%;
-    --card: 26 50% 10%;
-    --card-foreground: 26 5% 100%;
-    --popover: 26 50% 5%;
-    --popover-foreground: 26 5% 100%;
-    --primary: 26 81% 58%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 26 30% 20%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: -12 30% 25%;
-    --muted-foreground: 26 5% 65%;
-    --accent: -12 30% 25%;
-    --accent-foreground: 26 5% 95%;
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 26 5% 100%;
-    --border: 26 30% 50%;
-    --input: 26 30% 50%;
-    --ring: 26 81% 58%;
-    --radius: 0.75rem;
+    /* Name: custom color palette
+       Author: Ilias Ism
+       URL: https://gradient.page */
+
+    /* CSS: .bg-gradient { background: var(--gradient) } */
+    --gradient: #403b4a;
+
+    --background: 276 7.15% 2.08%;
+    --foreground: 276 1.1% 96.3%;
+
+    --muted: 276 5.5% 7.800000000000001%;
+    --muted-foreground: 276 1.1% 52.6%;
+
+    --popover: 276 62.8% 3.38%;
+    --popover-foreground: 276 1.1% 96.3%;
+
+    --card: 276 62.8% 3.38%;
+    --card-foreground: 276 1.1% 96.3%;
+
+    --border: 276 5.5% 7.800000000000001%;
+    --input: 276 5.5% 7.800000000000001%;
+
+    --primary: 276 11% 26%;
+    --primary-foreground: 276 1.1% 96.3%;
+
+    --secondary: 276 5.5% 7.800000000000001%;
+    --secondary-foreground: 276 1.1% 96.3%;
+
+    --accent: 276 5.5% 7.800000000000001%;
+    --accent-foreground: 276 1.1% 96.3%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 276 1.1% 96.3%;
+
+    --ring: 276 11% 26%;
   }
 }
 
@@ -62,15 +77,15 @@ body {
   }
 }
 
-/* add the code bellow */ 
+/* add the code bellow */
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
- /* Hide scrollbar for IE, Edge and Firefox */
+  /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-}
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }

@@ -2,6 +2,7 @@ import { Check, Clipboard, LoaderCircle } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Button } from "./button"
 import { codeToHtml } from "shiki"
+import { useTheme } from "next-themes"
 
 interface Props {
   children: React.ReactNode
@@ -14,6 +15,7 @@ export const Demo = ({
   cmd = "npx shadcn@latest add",
   onClick,
 }: Props) => {
+  const { theme } = useTheme()
   const [copied, setCopied] = useState(false)
   const [code, serCode] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -22,10 +24,13 @@ export const Demo = ({
     theme: "dracula",
   })
   useEffect(() => {
-    codeToHtml(cmd, { lang: "bash", theme: "github-light" }).then((code) => {
+    codeToHtml(cmd, {
+      lang: "bash",
+      theme: theme === "dark" ? "github-dark" : "github-light",
+    }).then((code) => {
       serCode(code)
     })
-  }, [cmd])
+  }, [cmd, theme])
 
   const handleClick = async () => {
     setIsLoading(true)
