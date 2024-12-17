@@ -51,7 +51,7 @@ export const Demo = ({
   }
   return (
     <div className="group/demo flex h-full w-full flex-col items-center justify-center gap-5">
-      <div className="group-hover/demo:border-border flex min-h-[30rem] max-w-3xl items-center justify-center rounded-2xl border border-transparent p-8 transition-all duration-300 group-hover/demo:shadow-lg">
+      <div className="group-hover/demo:bg-primary/15 flex min-h-[30rem] max-w-3xl items-center justify-center rounded-2xl border border-transparent p-8 transition-all duration-300 group-hover/demo:shadow-xl">
         {children}
       </div>
       {code && (

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss"
+import plugin from "tailwindcss/plugin"
 
 export default {
   darkMode: ["class"],
@@ -56,9 +57,57 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      backgroundImage: {
+        "gradient-primary":
+          "conic-gradient(at 75% 25%, #811a90, #c3c8ff, #e897dd, #e47b9e, #ffdbdb)",
+        "gradient-secondary":
+          "conic-gradient(at 75% 25%, #A611BD, #F8D3EF, #9726E2, #957BE4, #FFDBDB)",
+      },
+      animation: {
+        "spin-slow": "spin 15s linear infinite",
+        meteor: "meteor 5s linear infinite",
+      },
+      keyframes: {
+        meteor: {
+          "0%": {
+            transform: "rotate(215deg) translateX(0)",
+            opacity: "1",
+          },
+          "70%": {
+            opacity: "1",
+          },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: "0",
+          },
+        },
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        ".border-gradient": {
+          position: "relative",
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            top: "-10px",
+            left: "-10px",
+            right: "-10px",
+            bottom: "-10px",
+            border: "20px solid rgba(255,255,255,0.3)",
+            "border-image":
+              "conic-gradient(at 75% 25%, #811a90, #c3c8ff, #e897dd, #e47b9e, #ffdbdb) 1",
+            filter: "blur(20px)",
+            "pointer-events": "none",
+            "z-index": "-1",
+          },
+        },
+      })
+    }),
+  ],
   // safelist: [
   //   {
   //     pattern: /./,

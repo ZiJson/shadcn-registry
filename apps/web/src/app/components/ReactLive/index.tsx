@@ -98,7 +98,6 @@ const ReactLive = () => {
     const registryUrl = await uploadRegistry(code)
     setUrl(registryUrl)
   }
-
   return (
     <div className="grid h-[calc(100vh-2rem)] grid-cols-5 gap-5 sm:h-[calc(100vh-5rem)]">
       <div className="col-span-3">
@@ -122,10 +121,10 @@ const ReactLive = () => {
         <LiveProvider
           scope={scope}
           code={demoCode}
-          theme={themes.oneDark}
+          theme={customTheme}
           language="tsx"
         >
-          <div className="text-primary-foreground bg-primary w-full rounded-sm shadow-lg">
+          <div className="text-primary-foreground w-full rounded-sm shadow-lg">
             <p className="px-2 py-1 font-bold">Demo</p>
             <LiveEditor
               className="no-scrollbar max-h-[20rem] w-full overflow-auto rounded-sm text-sm"
@@ -136,10 +135,10 @@ const ReactLive = () => {
         <LiveProvider
           scope={scope}
           code={componentCode}
-          theme={themes.oneDark}
+          theme={customTheme}
           language="tsx"
         >
-          <div className="text-primary-foreground bg-primary w-full rounded-sm shadow-lg">
+          <div className="text-primary-foreground w-full rounded-sm shadow-lg">
             <p className="px-2 py-1 font-bold">Component</p>
             <LiveEditor
               className="no-scrollbar max-h-[20rem] w-full overflow-auto rounded-sm text-sm"
@@ -155,3 +154,11 @@ const ReactLive = () => {
 }
 
 export default ReactLive
+
+const customTheme = {
+  ...themes.oneDark,
+  plain: {
+    ...themes.oneDark.plain,
+    backgroundColor: "rgb(40 44 52 / 25%)",
+  },
+}

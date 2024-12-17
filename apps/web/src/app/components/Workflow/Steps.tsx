@@ -9,20 +9,20 @@ interface Props {
 }
 
 const Steps = ({ steps, onStepChange }: Props) => {
-  const [ref, index] = useItemInView({ threshold: 0.5 })
+  const [ref, index] = useItemInView({ threshold: 0.6 })
 
   useEffect(() => {
     if (index !== null) {
       onStepChange(index)
     }
-  }, [index])
+  }, [index, onStepChange])
 
   return (
     <div className="relative flex flex-1 flex-col" ref={ref}>
       {steps.map((step, index) => (
         <div
           key={index}
-          className="flex min-h-[100vh] items-center justify-center p-10 text-5xl font-bold"
+          className="flex min-h-[100vh] items-center justify-center p-20 text-6xl font-bold leading-snug"
         >
           {step}
         </div>
