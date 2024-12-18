@@ -2,11 +2,11 @@ import FeatureCard from "./FeatureCard"
 
 const Features = () => {
   return (
-    <div>
+    <div className="min-h-screen pt-8">
       <h1 className="mb-9 text-center text-4xl font-bold">
         Why Choose shadreg?
       </h1>
-      <div className="grid auto-rows-[20rem] grid-cols-2 gap-5 px-80">
+      <div className="grid grid-cols-2 gap-5">
         <FeatureCard
           title="Easy Configuration"
           description="Quickly set up with a guided init command"

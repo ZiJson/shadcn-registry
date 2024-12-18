@@ -99,7 +99,7 @@ const ReactLive = () => {
     setUrl(registryUrl)
   }
   return (
-    <div className="grid h-[calc(100vh-2rem)] grid-cols-5 gap-5 sm:h-[calc(100vh-5rem)]">
+    <div className="grid min-h-screen grid-cols-3 gap-5 lg:grid-cols-5">
       <div className="col-span-3">
         <LiveProvider
           code={fullCode}
@@ -117,7 +117,7 @@ const ReactLive = () => {
           <LiveError />
         </LiveProvider>
       </div>
-      <div className="col-span-2 flex flex-col items-center justify-center gap-5">
+      <div className="col-span-3 flex flex-col items-center justify-center gap-5 lg:col-span-2">
         <LiveProvider
           scope={scope}
           code={demoCode}
@@ -127,7 +127,7 @@ const ReactLive = () => {
           <div className="text-primary-foreground w-full rounded-sm shadow-lg">
             <p className="px-2 py-1 font-bold">Demo</p>
             <LiveEditor
-              className="no-scrollbar max-h-[20rem] w-full overflow-auto rounded-sm text-sm"
+              className="no-scrollbar bg-muted/20 dark:bg-primary/25 max-h-[20rem] w-full overflow-auto rounded-sm text-sm"
               onChange={(code) => setDemoCode(code)}
             />
           </div>
@@ -141,7 +141,7 @@ const ReactLive = () => {
           <div className="text-primary-foreground w-full rounded-sm shadow-lg">
             <p className="px-2 py-1 font-bold">Component</p>
             <LiveEditor
-              className="no-scrollbar max-h-[20rem] w-full overflow-auto rounded-sm text-sm"
+              className="no-scrollbar bg-muted/20 dark:bg-primary/25 max-h-[20rem] w-full overflow-auto rounded-sm text-sm backdrop-blur"
               onChange={(code) => {
                 setComponentCode(code)
               }}
@@ -159,6 +159,6 @@ const customTheme = {
   ...themes.oneDark,
   plain: {
     ...themes.oneDark.plain,
-    backgroundColor: "rgb(40 44 52 / 25%)",
+    backgroundColor: "rgb(40 44 52 / 0%)",
   },
 }

@@ -2,17 +2,18 @@ import Image from "next/image"
 import NextLogo from "../../../../public/next.svg"
 import ShadcnLogo from "../../../../public/shadcn.svg"
 import VercelLogo from "../../../../public/vercel.svg"
+import ShinnyDivider from "@/components/ShinnyDivider"
 
 const Integration = () => {
   return (
-    <div className="from-primary/50 -mb-72 flex h-[30rem] w-screen items-start justify-center bg-gradient-to-b from-40% pt-20">
+    <div className="from-primary/40 relative -z-10 -mb-80 flex h-[30rem] w-screen items-start justify-center bg-gradient-to-b from-40% pt-16">
       <div className="flex gap-20">
         <Image
           src={NextLogo}
           alt="Next.js Logo"
-          className="h-[30px] w-auto opacity-50"
+          className="h-[30px] w-auto opacity-70"
         />
-        <div className="flex items-center justify-center gap-2 opacity-50">
+        <div className="flex items-center justify-center gap-2 opacity-70">
           <Image
             src={ShadcnLogo}
             alt="Shadcn Logo"
@@ -25,9 +26,10 @@ const Integration = () => {
         <Image
           src={VercelLogo}
           alt="Vercel Logo"
-          className="h-[30px] w-auto opacity-50"
+          className="h-[30px] w-auto opacity-70"
         />
       </div>
+      <ShinnyDivider type="secondary" />
     </div>
   )
 }

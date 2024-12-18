@@ -8,7 +8,7 @@ import GradientEffect from "@/components/GradientEffect"
 
 export default function Home() {
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20 sm:px-32">
+    <div className="relative flex min-h-screen flex-col items-center justify-center px-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:px-32">
       <ReactLive />
       <Integration />
       <Inspiration />
@@ -17,11 +17,11 @@ export default function Home() {
       <UseCases />
       <GradientEffect
         type="secondary"
-        className="animate-spin-slow absolute -right-1/4 top-40 -z-10 w-1/2 origin-[55%_55%] rounded-full opacity-50"
+        className="animate-spin-slow absolute -right-1/4 top-40 -z-10 w-[60%] origin-[55%_55%] rounded-full opacity-30"
       />
       <GradientEffect
         type="secondary"
-        className="animate-spin-slow absolute -left-48 top-0 -z-10 w-1/3 origin-[55%_55%] rounded-full"
+        className="animate-spin-slow absolute -left-52 top-0 -z-10 w-1/3 origin-[55%_55%] rounded-full opacity-50"
       />
     </div>
   )

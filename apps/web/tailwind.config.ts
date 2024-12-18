@@ -59,12 +59,13 @@ export default {
       },
       backgroundImage: {
         "gradient-primary":
-          "conic-gradient(at 75% 25%, #811a90, #c3c8ff, #e897dd, #e47b9e, #ffdbdb)",
+          "conic-gradient( #811a90, #c3c8ff, #e897dd, #e47b9e, #ffdbdb)",
         "gradient-secondary":
           "conic-gradient(at 75% 25%, #A611BD, #F8D3EF, #9726E2, #957BE4, #FFDBDB)",
       },
       animation: {
         "spin-slow": "spin 15s linear infinite",
+        "spin-slower": "spin 20s linear infinite",
         meteor: "meteor 5s linear infinite",
       },
       keyframes: {

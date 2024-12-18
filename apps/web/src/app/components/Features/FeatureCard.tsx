@@ -7,7 +7,12 @@ interface Props {
 
 const FeatureCard = ({ title, description }: Props) => {
   return (
-    <MagicCard className="flex items-center justify-center p-5">
+    <MagicCard
+      className="flex h-[18rem] max-w-[30rem] items-center justify-center border-none p-5"
+      gradientColor="rgb(166 76 223)"
+      gradientOpacity={0.1}
+      gradientSize={500}
+    >
       <h1 className="text-4xl font-bold">{title}</h1>
       <p className="text-lg">{description}</p>
     </MagicCard>
