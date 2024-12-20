@@ -2,7 +2,10 @@ import Card from "./Card"
 
 const UseCases = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-10">
+    <div
+      className="flex min-h-screen flex-col items-center justify-center gap-10"
+      id="use-cases"
+    >
       <h1 className="mb-10 text-center text-3xl font-bold">
         How Developers Use shadreg
       </h1>

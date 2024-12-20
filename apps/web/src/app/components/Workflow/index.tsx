@@ -8,7 +8,7 @@ const Workflow = () => {
   const [stepIndex, setStepIndex] = useState<number>(0)
   console.log(stepIndex)
   return (
-    <div className="flex w-screen">
+    <div className="flex w-screen" id="tutorial">
       <Steps steps={steps} onStepChange={setStepIndex} />
       <StickyContent stepIndex={stepIndex} />
     </div>
