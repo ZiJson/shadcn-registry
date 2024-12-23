@@ -26,13 +26,15 @@ const Features = () => {
           title="Seamless Publishing"
           description="Publish your registries to Vercel Blob Storage for public use"
           imgSrc={PublishImage}
+          gradient
         />
         <FeatureCard
           title="Next.js Ready"
           description="Easily integrate with Next.js API endpoints"
           imgSrc={IntegrationImage}
+          gradient
         />
-        <GradientEffect className="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 rounded-full opacity-25 blur-[120px]" />
+        <GradientEffect className="animate-pulse-slow absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 rounded-full opacity-25 blur-[120px]" />
       </div>
     </div>
   )

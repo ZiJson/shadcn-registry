@@ -22,7 +22,7 @@ const CodeBlock = ({ code, lang }: Props) => {
   }, [code, lang])
 
   return (
-    <div className="bg-background/80 relative min-w-[35rem] overflow-hidden rounded-sm pt-8 shadow-xl">
+    <div className="bg-background/45 relative min-w-[35rem] overflow-hidden rounded-sm pt-8 shadow-2xl">
       <ShinnyDivider className="top-8 opacity-90" size="sm" />
       <div className="absolute left-0 top-0 flex h-8 items-center gap-2 px-2">
         <span className="bg-primary aspect-square w-3 rounded-full" />
@@ -30,7 +30,7 @@ const CodeBlock = ({ code, lang }: Props) => {
         <span className="bg-primary aspect-square w-3 rounded-full" />
       </div>
       <div
-        className="p-6 text-sm opacity-90"
+        className="p-6 text-sm"
         dangerouslySetInnerHTML={{ __html: transferredCode }}
       ></div>
     </div>

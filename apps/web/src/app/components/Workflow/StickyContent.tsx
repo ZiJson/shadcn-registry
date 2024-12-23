@@ -6,6 +6,7 @@ import FileTree2 from "./Contents/FileTree2"
 import NextAPIRoute from "./Contents/NextAPIRoute"
 import PushVercel from "./Contents/PushVercel"
 import ShadcnAdd from "./Contents/ShadcnAdd"
+import GradientEffect from "@/components/GradientEffect"
 
 interface Props {
   stepIndex: number
@@ -31,8 +32,16 @@ const StickyContent = ({ stepIndex }: Props) => {
     }
   }, [stepIndex])
   return (
-    <div className="bg-primary/50 sticky bottom-auto top-0 flex h-screen flex-1 items-center justify-center">
+    <div className="from-primary to-primary/30 sticky bottom-auto top-0 flex h-screen flex-1 items-center justify-center rounded-l-3xl bg-gradient-to-br">
       {Content}
+      <GradientEffect
+        type="secondary"
+        className="animate-spin-slower absolute right-1/2 top-10 -z-10 h-full w-full opacity-10"
+      />
+      <GradientEffect
+        type="secondary"
+        className="absolute right-1/2 h-1/4 w-1/4 opacity-15"
+      />
     </div>
   )
 }

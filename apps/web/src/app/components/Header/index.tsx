@@ -1,4 +1,3 @@
-import { ModeToggle } from "@/components/ModeToggle"
 import ShadRegLogo from "../../../../public/shadreg.svg"
 import GitHubLogo from "../../../../public/github.svg"
 import Image from "next/image"
@@ -27,7 +26,13 @@ const Header = () => {
       </div>
       <div>
         <Button size="icon" variant="ghost">
-          <Image src={GitHubLogo} alt="GitHub Logo" className="h-5 w-auto" />
+          <a
+            href="https://github.com/ZiJson/shadcn-registry"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Image src={GitHubLogo} alt="GitHub Logo" className="h-5 w-auto" />
+          </a>
         </Button>
       </div>
     </header>

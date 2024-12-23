@@ -4,7 +4,7 @@ function FileTree2() {
   return (
     <div className="relative overflow-hidden rounded-sm">
       <CodeBlock lang="bash" code={code2} />
-      <div className="absolute top-[11.1rem] h-[7.5rem] w-full bg-green-200/20" />
+      <div className="absolute bottom-[1.2rem] h-[6.5rem] w-full bg-green-200/20" />
     </div>
   )
 }

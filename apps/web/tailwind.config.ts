@@ -61,25 +61,17 @@ export default {
         "gradient-primary":
           "conic-gradient( #811a90, #c3c8ff, #e897dd, #e47b9e, #ffdbdb)",
         "gradient-secondary":
-          "conic-gradient(at 75% 25%, #A611BD, #F8D3EF, #9726E2, #957BE4, #FFDBDB)",
+          "conic-gradient(at 75% 25%, #4d0059, #ffaaea, #ffc487, #6e3fff, #ffdbdb)",
       },
       animation: {
         "spin-slow": "spin 15s linear infinite",
         "spin-slower": "spin 20s linear infinite",
-        meteor: "meteor 5s linear infinite",
+        "pulse-slow": "pulse 15s linear infinite",
       },
       keyframes: {
-        meteor: {
-          "0%": {
-            transform: "rotate(215deg) translateX(0)",
-            opacity: "1",
-          },
-          "70%": {
-            opacity: "1",
-          },
-          "100%": {
-            transform: "rotate(215deg) translateX(-500px)",
-            opacity: "0",
+        pulse: {
+          "50%": {
+            opacity: "0.1",
           },
         },
       },
