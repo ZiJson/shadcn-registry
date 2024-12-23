@@ -6,7 +6,6 @@ import { useState } from "react"
 
 const Workflow = () => {
   const [stepIndex, setStepIndex] = useState<number>(0)
-  console.log(stepIndex)
   return (
     <div className="flex w-screen" id="tutorial">
       <Steps steps={steps} onStepChange={setStepIndex} />
