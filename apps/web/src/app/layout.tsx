@@ -6,6 +6,7 @@ import "./globals.css"
 import Header from "./components/Header"
 import Footer from "./components/Footer/indes"
 import ScrollProgress from "@/components/ui/scroll-progress"
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,6 +34,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
