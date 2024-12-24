@@ -1,6 +1,5 @@
 "use client"
 import { cn } from "@/lib/utils"
-import { motion, useScroll, useSpring } from "framer-motion"
 import { useEffect, useState } from "react"
 
 interface ScrollProgressProps {
@@ -43,7 +42,7 @@ export default function ScrollProgress({ className }: ScrollProgressProps) {
       style={{
         width: `${scrollProgress}%`,
         background: `repeating-linear-gradient(
-      45deg,
+      90deg,
       white,
       white 2px,
       black 1px,
