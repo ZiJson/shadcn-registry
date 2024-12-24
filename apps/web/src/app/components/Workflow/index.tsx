@@ -7,7 +7,7 @@ import { useState } from "react"
 const Workflow = () => {
   const [stepIndex, setStepIndex] = useState<number>(0)
   return (
-    <div className="flex w-screen" id="tutorial">
+    <div className="grid w-screen grid-cols-2" id="tutorial">
       <Steps steps={steps} onStepChange={setStepIndex} />
       <StickyContent stepIndex={stepIndex} />
     </div>

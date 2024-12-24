@@ -32,7 +32,7 @@ const StickyContent = ({ stepIndex }: Props) => {
     }
   }, [stepIndex])
   return (
-    <div className="from-primary to-primary/30 sticky bottom-auto top-0 flex h-screen flex-1 items-center justify-center rounded-l-3xl bg-gradient-to-br">
+    <div className="from-primary to-primary/30 sticky left-0 top-0 flex h-screen flex-1 items-center justify-center rounded-l-3xl bg-gradient-to-br">
       {Content}
       <GradientEffect
         type="secondary"

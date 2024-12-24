@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 
 const Header = () => {
   return (
-    <header className="fixed top-0 z-10 flex h-16 w-full items-center justify-between px-40 font-sans backdrop-blur-lg">
+    <header className="fixed top-0 z-10 flex h-16 w-screen items-center justify-between px-40 font-sans backdrop-blur-lg">
       <div className="flex h-full items-center gap-10">
         <Link href="/" className="flex h-full items-center gap-2">
           <Image src={ShadRegLogo} alt="Shadcn Logo" className="h-5 w-auto" />

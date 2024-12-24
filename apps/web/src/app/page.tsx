@@ -7,7 +7,7 @@ import Workflow from "./components/Workflow"
 import GradientEffect from "@/components/GradientEffect"
 export default function Home() {
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center px-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:px-32">
+    <div className="relative flex min-h-screen flex-col items-center justify-center px-8 pb-20 sm:px-32">
       <ReactLive />
       <Integration />
       <Inspiration />
