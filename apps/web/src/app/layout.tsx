@@ -31,7 +31,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <ScrollProgress className="top-16 h-[3px] opacity-70" />
+          <ScrollProgress className="top-16 opacity-70" />
           {children}
           <Footer />
         </ThemeProvider>
