@@ -2,7 +2,6 @@ import ShinnyBorder from "@/components/ShinnyBorder"
 import Card from "./Card"
 import ShadRegLogo from "../../../../public/shadreg.svg"
 import Image from "next/image"
-import GradientEffect from "@/components/GradientEffect"
 
 const Inspiration = () => {
   return (
@@ -33,11 +32,6 @@ const Inspiration = () => {
           Start creating with <code>shadreg</code> today! &quot;
         </em>
       </div>
-      <GradientEffect
-        type="secondary"
-        className="animate-spin-slower absolute right-[80%] top-60 -z-10 aspect-[1.1] w-[60rem] origin-[60%_60%] rounded-full opacity-20 blur-[150px]"
-      />
-      <GradientEffect className="animate-spin-slower absolute bottom-0 left-full -z-10 w-[40rem] origin-[80%_80%] rounded-full opacity-20 blur-[100px]" />
     </div>
   )
 }
